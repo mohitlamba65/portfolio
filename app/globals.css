@@ -29,6 +29,48 @@
     --display: 'Space Grotesk', sans-serif;
   }
 
+  /* Glassmorphism utilities from JobTracker design system */
+  .glass {
+    background-color: rgba(16, 22, 31, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  }
+
+  .glass-card {
+    background-color: rgba(16, 22, 31, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Native cursor in admin panel */
+  body:has(.admin-container),
+  .admin-container,
+  .admin-container * {
+    cursor: auto !important;
+  }
+  .admin-container button,
+  .admin-container a,
+  .admin-container [role="button"],
+  .admin-container input[type="file"],
+  .admin-container select {
+    cursor: pointer !important;
+  }
+  .admin-container input[type="text"],
+  .admin-container input[type="email"],
+  .admin-container input[type="password"],
+  .admin-container textarea {
+    cursor: text !important;
+  }
+
   html[data-theme="light"] {
     --bg: #F2F4F7;
     --bg-panel: #FFFFFF;

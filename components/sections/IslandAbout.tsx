@@ -68,11 +68,14 @@ export default function IslandAbout({ profile, stats }: IslandAboutProps) {
           {/* Left: bio text */}
           <div id="about-text">
             {profile.profilePhotoUrl && (
-              <img
-                src={profile.profilePhotoUrl}
-                alt={profile.name}
-                className="reveal-item w-48 h-48 rounded-2xl object-cover mb-8"
-              />
+              <div className="reveal-item in mb-8 relative inline-block group">
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-[var(--cyan)]/40 to-[var(--violet)]/40 blur-sm opacity-60 group-hover:opacity-100 transition duration-300" />
+                <img
+                  src={profile.profilePhotoUrl}
+                  alt={profile.name}
+                  className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-2xl object-cover border-2 border-[var(--cyan)]/50 shadow-2xl bg-[var(--bg-panel)]"
+                />
+              </div>
             )}
             {bios.map((p, i) => (
               <p

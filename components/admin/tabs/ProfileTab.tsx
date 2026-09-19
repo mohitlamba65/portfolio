@@ -2,13 +2,19 @@
 
 import React from "react";
 import { PortfolioData } from "@/types/portfolio";
-import { User, Sparkles, MapPin, Mail, Plus, Trash2, Globe, Link2 } from "lucide-react";
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import {
+  User,
+  Sparkles,
+  MapPin,
+  Mail,
+  Plus,
+  Trash2,
+  Globe,
+  Share2,
+  Link2,
+  UserCheck,
+} from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 
 interface ProfileTabProps {
   data: PortfolioData;
@@ -43,7 +49,10 @@ export default function ProfileTab({ data, onChange }: ProfileTabProps) {
 
   const addBioParagraph = () => {
     updateProfile({
-      bioParagraphs: [...profile.bioParagraphs, "New paragraph about your engineering philosophy or background."],
+      bioParagraphs: [
+        ...profile.bioParagraphs,
+        "New paragraph describing your technical experience, architecture philosophy, or systems background.",
+      ],
     });
   };
 
@@ -54,280 +63,273 @@ export default function ProfileTab({ data, onChange }: ProfileTabProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12">
-      {/* LEFT COLUMN: Structured Form Cards */}
-      <div className="lg:col-span-7 space-y-6">
-        
-        {/* Core Identity */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-md bg-primary/10 text-primary">
-                <User size={20} />
-              </div>
-              <div>
-                <CardTitle>Core Identity</CardTitle>
-                <CardDescription>Primary branding & availability status</CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                  id="name"
-                  value={profile.name}
-                  onChange={(e) => updateProfile({ name: e.target.value })}
-                  placeholder="e.g. Mohit Lamba"
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-12">
+      {/* ================= LEFT COLUMN: Summary Card & Social Links ================= */}
+      <div className="lg:col-span-1 space-y-6">
+        {/* Profile Card Preview */}
+        <div className="glass-card rounded-xl p-6 border border-white/10 flex flex-col items-center text-center">
+          <div className="relative mb-4">
+            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[#35E7C7]/60 shadow-lg shadow-[#35E7C7]/15 bg-black/40 flex items-center justify-center">
+              {profile.profilePhotoUrl || profile.navbarAvatarUrl ? (
+                <img
+                  src={profile.profilePhotoUrl || profile.navbarAvatarUrl}
+                  alt={profile.name}
+                  className="w-full h-full object-cover"
                 />
-              </div>
+              ) : (
+                <User size={40} className="text-zinc-500" />
+              )}
+            </div>
+            <span className="absolute bottom-0 right-1 w-4 h-4 rounded-full bg-[#35E7C7] border-2 border-[#0B0F17]" />
+          </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="roleTitle">Role Title</Label>
-                <Input
-                  id="roleTitle"
-                  value={profile.roleTitle || ""}
-                  onChange={(e) => updateProfile({ roleTitle: e.target.value })}
-                  placeholder="e.g. Full Stack / Systems Engineer"
-                />
-              </div>
+          <h3 className="text-lg font-bold text-white">{profile.name || "Mohit Lamba"}</h3>
+          <p className="text-sm text-[#35E7C7] font-medium mt-0.5">
+            {profile.roleTitle || "Backend + AI Systems Engineer"}
+          </p>
+          <p className="text-xs text-zinc-400 mt-2 flex items-center gap-1.5">
+            <MapPin size={13} className="text-zinc-500" />
+            {profile.location || "Delhi, India"}
+          </p>
+
+          <div className="mt-4 pt-4 border-t border-white/10 w-full">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#35E7C7]/10 text-[#35E7C7] border border-[#35E7C7]/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#35E7C7] animate-pulse" />
+              {profile.availabilityBadge || "Available for Engineering Roles"}
+            </div>
+          </div>
+        </div>
+
+        {/* Contact & Social Links */}
+        <div className="glass-card rounded-xl p-6 border border-white/10 space-y-4">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <h4 className="text-sm font-bold text-white flex items-center gap-2">
+              <Globe size={16} className="text-[#35E7C7]" />
+              Public Social Links
+            </h4>
+          </div>
+
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1 flex items-center gap-1.5">
+                <Mail size={12} className="text-zinc-500" />
+                Contact Email
+              </label>
+              <input
+                type="email"
+                value={profile.socialLinks?.email || ""}
+                onChange={(e) => updateSocial({ email: e.target.value })}
+                placeholder="e.g. mohit@example.com"
+                className="w-full bg-black/30 border border-white/10 rounded-lg py-2 px-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all font-mono"
+              />
             </div>
 
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <Label htmlFor="availabilityBadge">Availability Badge</Label>
-                <span className="text-xs text-primary flex items-center gap-1.5 font-medium">
-                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                  Live Indicator
-                </span>
-              </div>
-              <Input
-                id="availabilityBadge"
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1 flex items-center gap-1.5">
+                <GithubIcon size={12} className="text-zinc-500" />
+                GitHub Profile URL
+              </label>
+              <input
+                type="text"
+                value={profile.socialLinks?.github || ""}
+                onChange={(e) => updateSocial({ github: e.target.value })}
+                placeholder="https://github.com/..."
+                className="w-full bg-black/30 border border-white/10 rounded-lg py-2 px-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all font-mono text-xs"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1 flex items-center gap-1.5">
+                <LinkedinIcon size={12} className="text-zinc-500" />
+                LinkedIn Profile URL
+              </label>
+              <input
+                type="text"
+                value={profile.socialLinks?.linkedin || ""}
+                onChange={(e) => updateSocial({ linkedin: e.target.value })}
+                placeholder="https://linkedin.com/in/..."
+                className="w-full bg-black/30 border border-white/10 rounded-lg py-2 px-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all font-mono text-xs"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1 flex items-center gap-1.5">
+                <Share2 size={12} className="text-zinc-500" />
+                Twitter / X Profile URL
+              </label>
+              <input
+                type="text"
+                value={profile.socialLinks?.twitter || ""}
+                onChange={(e) => updateSocial({ twitter: e.target.value })}
+                placeholder="https://x.com/..."
+                className="w-full bg-black/30 border border-white/10 rounded-lg py-2 px-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all font-mono text-xs"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1 flex items-center gap-1.5">
+                <MapPin size={12} className="text-zinc-500" />
+                Base Location
+              </label>
+              <input
+                type="text"
+                value={profile.location || ""}
+                onChange={(e) => updateProfile({ location: e.target.value })}
+                placeholder="e.g. Delhi, India"
+                className="w-full bg-black/30 border border-white/10 rounded-lg py-2 px-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ================= RIGHT COLUMN: Identity & Bio Statements ================= */}
+      <div className="lg:col-span-2 space-y-6">
+        {/* Core Identity & Headlines */}
+        <div className="glass-card rounded-xl p-6 border border-white/10 space-y-5">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <div>
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <UserCheck size={18} className="text-[#35E7C7]" />
+                Identity & Hero Taglines
+              </h3>
+              <p className="text-xs text-zinc-400 mt-0.5">
+                Core name, headlines, and status indicators rendered across the site.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1.5">
+                Full Display Name
+              </label>
+              <input
+                type="text"
+                value={profile.name || ""}
+                onChange={(e) => updateProfile({ name: e.target.value })}
+                placeholder="e.g. Mohit Lamba"
+                className="w-full bg-black/30 border border-white/10 rounded-lg py-2 px-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1.5">
+                Primary Role Title
+              </label>
+              <input
+                type="text"
+                value={profile.roleTitle || ""}
+                onChange={(e) => updateProfile({ roleTitle: e.target.value })}
+                placeholder="e.g. ENGINEER / BUILDER"
+                className="w-full bg-black/30 border border-white/10 rounded-lg py-2 px-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1.5">
+                Secondary Subtitle
+              </label>
+              <input
+                type="text"
+                value={profile.subTitle || ""}
+                onChange={(e) => updateProfile({ subTitle: e.target.value })}
+                placeholder="e.g. Backend + AI systems"
+                className="w-full bg-black/30 border border-white/10 rounded-lg py-2 px-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1.5">
+                Availability Badge Text
+              </label>
+              <input
+                type="text"
                 value={profile.availabilityBadge || ""}
                 onChange={(e) => updateProfile({ availabilityBadge: e.target.value })}
                 placeholder="e.g. AVAILABLE FOR BACKEND · AI SYSTEMS ROLES"
+                className="w-full bg-black/30 border border-white/10 rounded-lg py-2 px-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all"
               />
             </div>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="subTitle">Secondary Subtitle</Label>
-                <Input
-                  id="subTitle"
-                  value={profile.subTitle || ""}
-                  onChange={(e) => updateProfile({ subTitle: e.target.value })}
-                  placeholder="e.g. Engineer / Builder"
-                />
-              </div>
+          <div>
+            <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1.5">
+              Hero Impact Headline
+            </label>
+            <textarea
+              value={profile.headline || ""}
+              onChange={(e) => updateProfile({ headline: e.target.value })}
+              placeholder="e.g. Mohit Lamba builds backend systems, AI agents, and data pipelines that hold up in production."
+              className="w-full h-20 bg-black/30 border border-white/10 rounded-lg p-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all resize-none leading-relaxed"
+            />
+          </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="location">Physical Location</Label>
-                <div className="relative">
-                  <MapPin size={16} className="absolute left-3 top-2.5 text-muted-foreground" />
-                  <Input
-                    id="location"
-                    value={profile.location}
-                    onChange={(e) => updateProfile({ location: e.target.value })}
-                    placeholder="e.g. San Francisco, CA"
-                    className="pl-9"
-                  />
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          <div>
+            <label className="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-1.5">
+              Hero Narrative / Tagline
+            </label>
+            <textarea
+              value={profile.heroTag || ""}
+              onChange={(e) => updateProfile({ heroTag: e.target.value })}
+              placeholder="e.g. I build the parts of a product most people never see..."
+              className="w-full h-24 bg-black/30 border border-white/10 rounded-lg p-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all resize-none leading-relaxed"
+            />
+          </div>
+        </div>
 
-        {/* Hero Tagline & Narrative */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-md bg-amber-500/10 text-amber-500">
-                <Sparkles size={20} />
-              </div>
-              <div>
-                <CardTitle>Hero Tagline & Narrative</CardTitle>
-                <CardDescription>The elevator pitch displayed prominently on Home</CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <Label htmlFor="heroTag">Home Hero Tagline</Label>
-                <span className="text-xs text-muted-foreground">
-                  {(profile.heroTag || "").length} characters
-                </span>
-              </div>
-              <Textarea
-                id="heroTag"
-                rows={3}
-                value={profile.heroTag || ""}
-                onChange={(e) => updateProfile({ heroTag: e.target.value })}
-                placeholder="e.g. Focused on distributed backends..."
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="headline">SEO Headline / Meta Description</Label>
-              <Input
-                id="headline"
-                value={profile.headline || ""}
-                onChange={(e) => updateProfile({ headline: e.target.value })}
-                placeholder="e.g. Mohit Lamba builds distributed backends..."
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Bio Paragraphs */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
+        {/* Canonical Bio Paragraphs */}
+        <div className="glass-card rounded-xl p-6 border border-white/10 space-y-4">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
             <div>
-              <CardTitle>About Section Story</CardTitle>
-              <CardDescription>Paragraphs rendered in the About tab narrative</CardDescription>
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <Sparkles size={18} className="text-[#35E7C7]" />
+                About Section Bio Paragraphs
+              </h3>
+              <p className="text-xs text-zinc-400 mt-0.5">
+                Narrative paragraphs displayed in the About section of your portfolio.
+              </p>
             </div>
-            <Button onClick={addBioParagraph} variant="outline" size="sm" className="gap-2">
-              <Plus size={16} /> Add Paragraph
-            </Button>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {profile.bioParagraphs.map((para, idx) => (
-              <div key={idx} className="p-4 rounded-xl border bg-muted/30 space-y-3 relative">
-                <div className="flex justify-between items-center">
-                  <Label className="text-muted-foreground">Paragraph #{idx + 1}</Label>
+            <button
+              type="button"
+              onClick={addBioParagraph}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#35E7C7]/15 hover:bg-[#35E7C7]/25 text-[#35E7C7] border border-[#35E7C7]/30 rounded-lg text-xs font-semibold transition-all cursor-pointer"
+            >
+              <Plus size={14} />
+              <span>Add Paragraph</span>
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {profile.bioParagraphs?.map((paragraph, index) => (
+              <div
+                key={index}
+                className="p-4 bg-white/[0.02] rounded-lg border border-white/5 space-y-2 relative group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 font-semibold">
+                    Paragraph 0{index + 1}
+                  </span>
                   {profile.bioParagraphs.length > 1 && (
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10 absolute top-2 right-2"
-                      onClick={() => removeBioParagraph(idx)}
+                    <button
+                      type="button"
+                      onClick={() => removeBioParagraph(index)}
+                      className="text-zinc-500 hover:text-red-400 transition-colors p-1"
+                      title="Remove paragraph"
                     >
-                      <Trash2 size={16} />
-                    </Button>
+                      <Trash2 size={14} />
+                    </button>
                   )}
                 </div>
-                <Textarea
-                  rows={4}
-                  value={para}
-                  onChange={(e) => handleBioChange(idx, e.target.value)}
+                <textarea
+                  value={paragraph}
+                  onChange={(e) => handleBioChange(index, e.target.value)}
+                  className="w-full h-24 bg-black/30 border border-white/10 rounded-lg p-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#35E7C7]/50 focus:border-[#35E7C7]/50 transition-all resize-y leading-relaxed"
+                  placeholder="Enter paragraph text..."
                 />
               </div>
             ))}
-          </CardContent>
-        </Card>
-
-        {/* Social & Contact */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Contact & Social Channels</CardTitle>
-            <CardDescription>Public links used in the footer and contact sections</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="github" className="flex items-center gap-2">
-                  <Globe size={16} /> GitHub Profile
-                </Label>
-                <Input
-                  id="github"
-                  value={profile.socialLinks.github}
-                  onChange={(e) => updateSocial({ github: e.target.value })}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="linkedin" className="flex items-center gap-2">
-                  <Link2 size={16} /> LinkedIn Profile
-                </Label>
-                <Input
-                  id="linkedin"
-                  value={profile.socialLinks.linkedin}
-                  onChange={(e) => updateSocial({ linkedin: e.target.value })}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email" className="flex items-center gap-2">
-                  <Mail size={16} /> Contact Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={profile.socialLinks.email}
-                  onChange={(e) => updateSocial({ email: e.target.value })}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="twitter" className="flex items-center gap-2">
-                  <Globe size={16} /> Twitter / X
-                </Label>
-                <Input
-                  id="twitter"
-                  value={profile.socialLinks.twitter || ""}
-                  onChange={(e) => updateSocial({ twitter: e.target.value })}
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* RIGHT COLUMN: Real-Time Live Preview Mockup */}
-      <div className="lg:col-span-5">
-        <div className="sticky top-28 space-y-4">
-          <div className="flex items-center justify-between px-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
-              Live Preview
-            </span>
-            <span className="text-xs text-muted-foreground">Viewport Mock</span>
           </div>
-
-          {/* Hero Mockup Card */}
-          <Card className="overflow-hidden border-2">
-            <CardContent className="p-8 relative">
-              <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
-              
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary mb-6 border">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-xs font-medium text-muted-foreground">
-                  {profile.availabilityBadge || "AVAILABLE FOR ROLES"}
-                </span>
-              </div>
-
-              <div className="space-y-1 mb-6">
-                <h2 className="text-3xl font-bold tracking-tight">
-                  {profile.name || "Your Name"}
-                </h2>
-                <div className="flex items-center gap-2 text-primary font-medium">
-                  <span>{profile.roleTitle || "Full Stack Engineer"}</span>
-                </div>
-              </div>
-
-              <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                {profile.heroTag || "Add your hero tagline in the form on the left to preview it here live."}
-              </p>
-
-              <div className="flex items-center gap-3 pt-6 border-t">
-                <Button className="rounded-full">Explore Work &rarr;</Button>
-                <Button variant="outline" className="rounded-full">Get in Touch</Button>
-              </div>
-
-              <div className="flex items-center justify-between pt-6 mt-6 border-t text-sm text-muted-foreground">
-                <span className="flex items-center gap-2">
-                  <MapPin size={16} className="text-primary" />
-                  {profile.location || "Earth"}
-                </span>
-                <div className="flex items-center gap-3">
-                  {profile.socialLinks.github && <Globe size={18} />}
-                  {profile.socialLinks.linkedin && <Link2 size={18} />}
-                  {profile.socialLinks.email && <Mail size={18} />}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>

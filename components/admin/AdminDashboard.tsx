@@ -300,7 +300,7 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
 
   // ================= MAIN ADMIN DASHBOARD =================
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] pb-36 relative">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] pb-36 pt-24 relative">
       {/* Background ambient lighting */}
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] rounded-full bg-[var(--cyan)]/5 blur-[160px] pointer-events-none" />
 

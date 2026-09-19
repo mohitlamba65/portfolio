@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, IBM_Plex_Mono, Geist } from "next/font/google";
 import "./globals.css";
 import { PortfolioService } from "@/services/portfolio-service";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--display", display: "swap" });
 const inter = Inter({ subsets: ["latin"], variable: "--sans", display: "swap" });
@@ -21,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable}`}>
+    <html lang="en" data-theme="dark" className={cn(spaceGrotesk.variable, inter.variable, ibmPlexMono.variable, "font-sans", geist.variable)}>
       <body>{children}</body>
     </html>
   );

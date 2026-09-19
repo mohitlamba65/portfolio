@@ -67,6 +67,13 @@ export default function IslandAbout({ profile, stats }: IslandAboutProps) {
         <div className="grid2">
           {/* Left: bio text */}
           <div id="about-text">
+            {profile.profilePhotoUrl && (
+              <img
+                src={profile.profilePhotoUrl}
+                alt={profile.name}
+                className="reveal-item w-48 h-48 rounded-2xl object-cover mb-8"
+              />
+            )}
             {bios.map((p, i) => (
               <p
                 key={i}

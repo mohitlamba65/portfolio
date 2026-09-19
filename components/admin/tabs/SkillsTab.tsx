@@ -4,6 +4,11 @@ import React, { useState } from "react";
 import { PortfolioData, Skill, SkillCategory } from "@/types/portfolio";
 import { Cpu, Plus, Trash2, CheckCircle2, Sparkles } from "lucide-react";
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+
 interface SkillsTabProps {
   data: PortfolioData;
   onChange: (updater: (prev: PortfolioData) => PortfolioData) => void;
@@ -66,83 +71,93 @@ export default function SkillsTab({ data, onChange }: SkillsTabProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       {/* Header Banner */}
-      <div className="p-6 rounded-2xl bg-[var(--bg-panel)] border border-[var(--line)] shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 text-[var(--cyan)] font-mono text-xs mb-1">
-            <span className="w-2 h-2 rounded-full bg-[var(--cyan)] animate-pulse" />
-            SKILLS CONSTELLATION
+      <Card className="bg-muted/30">
+        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 text-primary font-medium text-xs mb-2 uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              Skills Constellation
+            </div>
+            <CardTitle className="text-2xl">Technical Stack & Capabilities</CardTitle>
+            <CardDescription className="mt-1">
+              Click on the rating dots to adjust proficiency levels (1 to 5) directly.
+            </CardDescription>
           </div>
-          <h2 className="text-xl font-bold text-[var(--text)] font-sans">
-            Technical Stack & Capabilities
-          </h2>
-          <p className="text-xs text-[var(--text-dim)] font-mono mt-1">
-            Click on the rating dots to adjust proficiency levels (1 to 5) directly.
-          </p>
-        </div>
 
-        <div className="text-xs font-mono px-3 py-1.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--line)] text-[var(--text)]">
-          Total Skills: <span className="text-[var(--cyan)] font-bold">{skills.length}</span>
-        </div>
-      </div>
+          <div className="text-sm font-medium px-4 py-2 rounded-xl bg-background border shadow-sm flex items-center gap-2">
+            Total Skills: <span className="text-primary font-bold">{skills.length}</span>
+          </div>
+        </CardHeader>
+      </Card>
 
       {/* Quick Add Inline Form */}
-      <form
-        onSubmit={handleAddSkill}
-        className="p-4 rounded-2xl bg-[var(--bg-panel)] border border-[var(--line)] flex flex-wrap items-center gap-3"
-      >
-        <div className="flex-1 min-w-[200px]">
-          <input
-            type="text"
-            value={newSkillName}
-            onChange={(e) => setNewSkillName(e.target.value)}
-            placeholder="Skill or framework name (e.g. LangGraph, Rust, Kafka)..."
-            className="w-full px-3.5 py-2 rounded-xl bg-[var(--bg-panel-2)] border border-[var(--line)] text-xs text-[var(--text)] font-mono focus:outline-none focus:border-[var(--cyan)]"
-          />
-        </div>
-
-        <select
-          value={newSkillCategory}
-          onChange={(e) => setNewSkillCategory(e.target.value as SkillCategory)}
-          className="px-3.5 py-2 rounded-xl bg-[var(--bg-panel-2)] border border-[var(--line)] text-xs text-[var(--text)] font-mono focus:outline-none focus:border-[var(--cyan)]"
-        >
-          <option value="backend">Backend Core</option>
-          <option value="ai">AI & Agents</option>
-          <option value="data">Data & Streams</option>
-          <option value="frontend">Frontend & UI</option>
-          <option value="infra">Infra & DevOps</option>
-        </select>
-
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--bg-panel-2)] border border-[var(--line)]">
-          <span className="text-xs font-mono text-[var(--text-dim)]">Level:</span>
-          <div className="flex gap-1.5">
-            {[1, 2, 3, 4, 5].map((lvl) => (
-              <button
-                key={lvl}
-                type="button"
-                onClick={() => setNewSkillLevel(lvl)}
-                className={`w-4 h-4 rounded-full transition-all cursor-pointer ${
-                  lvl <= newSkillLevel
-                    ? "bg-[var(--cyan)] scale-110 shadow-sm shadow-[var(--cyan)]"
-                    : "bg-[var(--line)] hover:bg-[var(--text-faint)]"
-                }`}
+      <Card>
+        <CardContent className="pt-6">
+          <form
+            onSubmit={handleAddSkill}
+            className="flex flex-col sm:flex-row items-start sm:items-end gap-4"
+          >
+            <div className="flex-1 w-full space-y-2">
+              <Label>Skill Name</Label>
+              <Input
+                type="text"
+                value={newSkillName}
+                onChange={(e) => setNewSkillName(e.target.value)}
+                placeholder="e.g. LangGraph, Rust, Kafka..."
               />
-            ))}
-          </div>
-        </div>
+            </div>
 
-        <button
-          type="submit"
-          className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[var(--cyan)] text-[#04120F] text-xs font-mono font-bold hover:brightness-110 transition-all cursor-pointer"
-        >
-          <Plus size={14} />
-          <span>Add Skill</span>
-        </button>
-      </form>
+            <div className="w-full sm:w-48 space-y-2">
+              <Label>Category</Label>
+              <select
+                value={newSkillCategory}
+                onChange={(e) => setNewSkillCategory(e.target.value as SkillCategory)}
+                className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="backend">Backend Core</option>
+                <option value="ai">AI & Agents</option>
+                <option value="data">Data & Streams</option>
+                <option value="frontend">Frontend & UI</option>
+                <option value="infra">Infra & DevOps</option>
+              </select>
+            </div>
+
+            <div className="w-full sm:w-auto space-y-2">
+              <Label>Proficiency (1-5)</Label>
+              <div className="flex items-center gap-2 h-10 px-4 rounded-md border bg-background">
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((lvl) => (
+                    <button
+                      key={lvl}
+                      type="button"
+                      onClick={() => setNewSkillLevel(lvl)}
+                      className={`w-4 h-4 rounded-full transition-all cursor-pointer ${
+                        lvl <= newSkillLevel
+                          ? "bg-primary scale-110 shadow-sm shadow-primary/50"
+                          : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full sm:w-auto h-10"
+              disabled={!newSkillName.trim()}
+            >
+              <Plus size={16} className="mr-2" />
+              Add Skill
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
 
       {/* Category Filter Pills */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 pt-2">
         {CATEGORIES.map((cat) => {
           const active = selectedCat === cat.id;
           const count =
@@ -151,61 +166,61 @@ export default function SkillsTab({ data, onChange }: SkillsTabProps) {
               : skills.filter((s) => s.category === cat.id).length;
 
           return (
-            <button
+            <Button
               key={cat.id}
-              type="button"
+              variant={active ? "default" : "outline"}
+              size="sm"
               onClick={() => setSelectedCat(cat.id)}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer border ${
-                active
-                  ? "bg-[var(--cyan)] text-[#04120F] font-bold border-[var(--cyan)]"
-                  : "bg-[var(--bg-panel)] text-[var(--text-dim)] border-[var(--line)] hover:border-[var(--cyan)] hover:text-[var(--text)]"
+              className={`rounded-full gap-2 transition-all ${
+                active ? "shadow-md" : "hover:border-primary/50 text-muted-foreground hover:text-foreground"
               }`}
             >
-              <span>{cat.label}</span>
+              {cat.label}
               <span
-                className={`px-1.5 py-0.2 rounded-full text-[10px] ${
-                  active ? "bg-[#04120F]/20 text-[#04120F]" : "bg-[var(--bg-elevated)] text-[var(--text-dim)]"
+                className={`px-1.5 py-0.5 rounded-full text-[10px] leading-none flex items-center justify-center min-w-[20px] ${
+                  active ? "bg-primary-foreground/20 text-primary-foreground" : "bg-muted text-muted-foreground"
                 }`}
               >
                 {count}
               </span>
-            </button>
+            </Button>
           );
         })}
       </div>
 
       {/* Skills Grid Matching .stack-card */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {filteredSkills.map((skill) => {
           return (
-            <div
+            <Card
               key={skill.id}
-              className="p-4 rounded-xl bg-[var(--bg-panel)] border border-[var(--line)] hover:border-[var(--cyan)]/60 transition-all flex flex-col items-center justify-between text-center gap-2.5 group relative"
+              className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all flex flex-col items-center justify-between text-center gap-3 p-5 bg-card/50 hover:bg-card hover:shadow-md"
             >
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => removeSkill(skill.id)}
-                className="absolute top-2 right-2 p-1 text-[var(--text-faint)] hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                className="absolute top-1 right-1 h-7 w-7 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity hover:text-destructive hover:bg-destructive/10"
                 title="Remove Skill"
               >
-                <Trash2 size={12} />
-              </button>
+                <Trash2 size={14} />
+              </Button>
 
-              <div className="w-8 h-8 rounded-lg bg-[var(--bg-elevated)] border border-[var(--line)] flex items-center justify-center text-[var(--cyan)] font-mono text-xs font-bold mt-1">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary font-bold text-sm mt-1">
                 {skill.name.slice(0, 2).toUpperCase()}
               </div>
 
-              <div className="min-w-0 w-full">
-                <span className="text-xs font-medium text-[var(--text)] truncate block font-sans">
+              <div className="min-w-0 w-full space-y-1">
+                <span className="text-sm font-semibold text-foreground truncate block">
                   {skill.name}
                 </span>
-                <span className="text-[10px] font-mono text-[var(--text-dim)] uppercase block truncate mt-0.5">
+                <span className="text-[10px] text-muted-foreground uppercase tracking-wider block truncate">
                   {skill.category}
                 </span>
               </div>
 
               {/* Interactive 5-Dot Level Selector */}
-              <div className="flex gap-1.5 pt-1" title="Click to adjust level (1-5)">
+              <div className="flex gap-1.5 pt-2 w-full justify-center" title="Click to adjust level (1-5)">
                 {[1, 2, 3, 4, 5].map((lvl) => (
                   <button
                     key={lvl}
@@ -213,13 +228,13 @@ export default function SkillsTab({ data, onChange }: SkillsTabProps) {
                     onClick={() => updateSkillLevel(skill.id, lvl)}
                     className={`w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${
                       lvl <= skill.level
-                        ? "bg-[var(--cyan)] scale-110"
-                        : "bg-[var(--line)] hover:bg-[var(--text-faint)]"
+                        ? "bg-primary scale-110"
+                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
                     }`}
                   />
                 ))}
               </div>
-            </div>
+            </Card>
           );
         })}
       </div>

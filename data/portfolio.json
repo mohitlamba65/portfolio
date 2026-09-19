@@ -1,0 +1,289 @@
+{
+  "profile": {
+    "name": "Mohit Lamba",
+    "roleTitle": "ENGINEER / BUILDER",
+    "subTitle": "Backend + AI systems",
+    "headline": "The interesting work starts after the request leaves the browser.",
+    "location": "Delhi, India · available",
+    "availabilityStatus": "Open for high-scale backend engineering & AI infrastructure roles",
+    "bioParagraphs": [
+      "I'm a full-stack developer who ended up specializing in the harder half of the stack: backend systems and AI infrastructure. I like problems where the interesting part isn't the UI — it's what happens after the request leaves the browser.",
+      "At EY, I helped build a WhatsApp engagement platform that now serves 5M+ users — the kind of scale where every shortcut you take in the backend eventually finds you. That's where I learned to care about reliability, not just features.",
+      "These days I split my time between agentic AI — LangGraph, LangChain, autonomous workflows — and distributed backend systems that need to survive unpredictable load bursts."
+    ],
+    "navbarAvatarUrl": "/default-avatar.svg",
+    "profilePhotoUrl": "/default-avatar.svg",
+    "resumeUrl": "/resume.pdf",
+    "socialLinks": {
+      "github": "https://github.com/mohitlamba65",
+      "linkedin": "https://linkedin.com/in/mohitlamba",
+      "twitter": "https://twitter.com/mohitlamba",
+      "email": "mohitlamba65@gmail.com"
+    }
+  },
+  "stats": {
+    "usersServed": "5M+",
+    "publicActivitySignal": 2770,
+    "uptimeSla": "99.99%",
+    "systemsShipped": 56
+  },
+  "experiences": [
+    {
+      "id": "exp-ey",
+      "company": "EY (Ernst & Young)",
+      "role": "Backend Systems & AI Engineer",
+      "period": "2023 — Present",
+      "location": "Gurugram / Delhi NCR",
+      "highlightMetric": "5M+ Active Users",
+      "description": "Architected and scaled conversational intelligence and high-throughput messaging infrastructure handling mission-critical enterprise workflows.",
+      "bullets": [
+        "Architected WhatsApp engagement microservices platform processing millions of events daily with 99.98% SLA.",
+        "Engineered asynchronous queue decoupling with RabbitMQ and Redis caching, slashing p95 latency from 850ms to 92ms.",
+        "Integrated multi-agent conversational pipelines using LangGraph and LangChain for automated user verification and smart ticket triage.",
+        "Implemented resilient telemetry, Prometheus metrics, and automated alert routing for proactive failure isolation."
+      ],
+      "techStack": [
+        "Node.js",
+        "TypeScript",
+        "Express",
+        "RabbitMQ",
+        "Redis",
+        "PostgreSQL",
+        "LangGraph",
+        "Docker"
+      ]
+    },
+    {
+      "id": "exp-ai-infra",
+      "company": "Autonomous AI Labs",
+      "role": "Distributed Systems & Agentic AI Architect",
+      "period": "2022 — 2023",
+      "location": "Remote",
+      "highlightMetric": "100k+ RAG Queries / Day",
+      "description": "Designed hybrid vector search retrieval and stateful multi-agent execution graphs for enterprise knowledge ingestion.",
+      "bullets": [
+        "Built resilient RAG engine featuring contextual chunking, re-ranking with cross-encoders, and pgvector clustering.",
+        "Developed MCP (Model Context Protocol) servers allowing local tools and databases to interface securely with LLM agents.",
+        "Implemented circuit breakers, token usage budgets, and fallback chains that reduced LLM API failures by 94%."
+      ],
+      "techStack": [
+        "Python",
+        "FastAPI",
+        "LangChain",
+        "pgvector",
+        "PostgreSQL",
+        "Docker",
+        "AWS"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-agentic-workflow",
+      "title": "Agentic Graph Core",
+      "tagline": "Stateful multi-agent orchestration engine with dynamic branching and cyclic verification",
+      "description": "An asynchronous workflow engine designed for fault-tolerant LLM agent swarms. Implements checkpointing, human-in-the-loop review, and self-healing tool execution.",
+      "metrics": "Sub-80ms routing · 100% state persistence",
+      "architectureNotes": "Built on top of LangGraph state machines, Redis stream queues, and PostgreSQL JSONB event-sourcing.",
+      "techStack": [
+        "TypeScript",
+        "Node.js",
+        "LangGraph",
+        "Redis Streams",
+        "PostgreSQL"
+      ],
+      "liveUrl": "https://github.com/mohitlamba65",
+      "githubUrl": "https://github.com/mohitlamba65",
+      "featured": true
+    },
+    {
+      "id": "proj-whatsapp-engine",
+      "title": "Enterprise Omnichannel Relay",
+      "tagline": "High-concurrency webhook ingest and message dispatch engine for WhatsApp Business API",
+      "description": "Designed to ingest massive bursts of webhook webhooks, deduplicate incoming events, and route to distributed workers with backpressure management.",
+      "metrics": "5M+ users · 12,000 req/sec peak ingestion",
+      "architectureNotes": "Asynchronous event-driven architecture using RabbitMQ, Redis sliding-window rate limiters, and cluster clustering.",
+      "techStack": [
+        "Node.js",
+        "RabbitMQ",
+        "Redis",
+        "Docker",
+        "Express"
+      ],
+      "liveUrl": "https://github.com/mohitlamba65",
+      "githubUrl": "https://github.com/mohitlamba65",
+      "featured": true
+    },
+    {
+      "id": "proj-rag-retriever",
+      "title": "Contextual Neural Vector Index",
+      "tagline": "Semantic search and document intelligence engine with hybrid sparse-dense retrieval",
+      "description": "Hybrid vector retrieval system combining BM25 keyword matching with dense embeddings and cross-encoder re-ranking for ultra-precise citations.",
+      "metrics": "98.4% retrieval accuracy · <120ms latency",
+      "architectureNotes": "pgvector indexed with HNSW, Redis cache for hot embeddings, and semantic cache deduping.",
+      "techStack": [
+        "PostgreSQL",
+        "pgvector",
+        "FastAPI",
+        "Python",
+        "Docker"
+      ],
+      "liveUrl": "https://github.com/mohitlamba65",
+      "githubUrl": "https://github.com/mohitlamba65",
+      "featured": true
+    }
+  ],
+  "skills": [
+    {
+      "id": "Node.js",
+      "name": "Node.js",
+      "category": "backend",
+      "level": 9
+    },
+    {
+      "id": "TypeScript",
+      "name": "TypeScript",
+      "category": "backend",
+      "level": 9
+    },
+    {
+      "id": "Express",
+      "name": "Express",
+      "category": "backend",
+      "level": 8
+    },
+    {
+      "id": "REST APIs",
+      "name": "REST APIs",
+      "category": "backend",
+      "level": 9
+    },
+    {
+      "id": "RabbitMQ",
+      "name": "RabbitMQ",
+      "category": "backend",
+      "level": 8
+    },
+    {
+      "id": "Kafka",
+      "name": "Kafka",
+      "category": "backend",
+      "level": 7
+    },
+    {
+      "id": "LangGraph",
+      "name": "LangGraph",
+      "category": "ai",
+      "level": 9
+    },
+    {
+      "id": "LangChain",
+      "name": "LangChain",
+      "category": "ai",
+      "level": 9
+    },
+    {
+      "id": "RAG",
+      "name": "RAG Architectures",
+      "category": "ai",
+      "level": 9
+    },
+    {
+      "id": "MCP",
+      "name": "MCP (Model Context)",
+      "category": "ai",
+      "level": 8
+    },
+    {
+      "id": "LLM APIs",
+      "name": "LLM APIs & Prompting",
+      "category": "ai",
+      "level": 9
+    },
+    {
+      "id": "PostgreSQL",
+      "name": "PostgreSQL",
+      "category": "data",
+      "level": 9
+    },
+    {
+      "id": "MongoDB",
+      "name": "MongoDB",
+      "category": "data",
+      "level": 8
+    },
+    {
+      "id": "Redis",
+      "name": "Redis",
+      "category": "data",
+      "level": 9
+    },
+    {
+      "id": "Mongoose",
+      "name": "Mongoose",
+      "category": "data",
+      "level": 8
+    },
+    {
+      "id": "Prisma",
+      "name": "Prisma ORM",
+      "category": "data",
+      "level": 8
+    },
+    {
+      "id": "React",
+      "name": "React",
+      "category": "frontend",
+      "level": 8
+    },
+    {
+      "id": "Next.js",
+      "name": "Next.js",
+      "category": "frontend",
+      "level": 8
+    },
+    {
+      "id": "Tailwind",
+      "name": "Tailwind CSS",
+      "category": "frontend",
+      "level": 8
+    },
+    {
+      "id": "TanStack Query",
+      "name": "TanStack Query",
+      "category": "frontend",
+      "level": 7
+    },
+    {
+      "id": "Docker",
+      "name": "Docker",
+      "category": "infra",
+      "level": 8
+    },
+    {
+      "id": "AWS",
+      "name": "AWS (ECS, S3, RDS)",
+      "category": "infra",
+      "level": 7
+    },
+    {
+      "id": "CI/CD",
+      "name": "GitHub Actions CI/CD",
+      "category": "infra",
+      "level": 8
+    },
+    {
+      "id": "Grafana",
+      "name": "Grafana",
+      "category": "infra",
+      "level": 7
+    },
+    {
+      "id": "Prometheus",
+      "name": "Prometheus",
+      "category": "infra",
+      "level": 7
+    }
+  ],
+  "lastUpdated": "2026-09-19T06:30:00Z"
+}

@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #f8fafc;
+    --foreground: #0f172a;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --card-border: rgba(15, 23, 42, 0.08);
+    --card-hover-border: rgba(13, 148, 136, 0.35);
+    --muted: #64748b;
+    --muted-background: #f1f5f9;
+    --primary: #0d9488;
+    --primary-glow: rgba(13, 148, 136, 0.2);
+    --secondary: #d97706;
+    --border: #e2e8f0;
+    --sidebar-bg: #f1f5f9;
+    --sidebar-border: #e2e8f0;
+    --code-bg: #f1f5f9;
+  }
+
+  .dark {
+    --background: #0a0e17;
+    --foreground: #f1f5f9;
+    --card: rgba(16, 24, 39, 0.85);
+    --card-foreground: #f1f5f9;
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-hover-border: rgba(53, 231, 199, 0.35);
+    --muted: #94a3b8;
+    --muted-background: rgba(255, 255, 255, 0.05);
+    --primary: #35e7c7;
+    --primary-glow: rgba(53, 231, 199, 0.25);
+    --secondary: #ffa645;
+    --border: rgba(255, 255, 255, 0.1);
+    --sidebar-bg: #070a10;
+    --sidebar-border: rgba(255, 255, 255, 0.08);
+    --code-bg: #0f172a;
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  opacity: 0.3;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Glassmorphism & Cyber Card Effects */
+.glass-panel {
+  background-color: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.glass-panel:hover {
+  border-color: var(--card-hover-border);
+}
+
+.glow-teal {
+  box-shadow: 0 0 24px var(--primary-glow);
+}
+
+/* Monospace font utility */
+.font-mono-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Smooth Tab Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-tab-enter {
+  animation: fadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

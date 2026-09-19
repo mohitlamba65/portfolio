@@ -1,23 +1,26 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
+import { ExternalLink, ArrowUpRight, Code2 } from "lucide-react";
 
 export default function ControlRoomProjects({ projects }: { projects: any[] }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll(".reveal").forEach((el, i) => {
-            setTimeout(() => {
-              el.classList.add("in");
-            }, i * 150);
-          });
-        }
-      });
-    }, { threshold: 0.1 });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll(".reveal").forEach((el, i) => {
+              setTimeout(() => {
+                el.classList.add("in");
+              }, i * 120);
+            });
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
@@ -26,93 +29,125 @@ export default function ControlRoomProjects({ projects }: { projects: any[] }) {
   }, []);
 
   return (
-    <section id="projects" ref={sectionRef} className="py-24 border-t border-[var(--line)]">
-      <div className="reveal font-mono text-sm text-[var(--cyan)] mb-12 tracking-widest uppercase">
-        03 / Selected_Projects
-      </div>
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="py-24 sm:py-32 border-b border-[var(--line)] relative"
+    >
+      <div className="section-inner">
+        {/* Section Header */}
+        <div className="reveal flex items-center gap-2 font-mono text-xs tracking-widest text-[var(--cyan)] uppercase mb-4">
+          <span className="w-4 h-[1px] bg-[var(--cyan)]" />
+          <span>03 / SELECTED_PROJECTS</span>
+        </div>
 
-      <div className="flex flex-col gap-24">
-        {projects.map((proj, i) => {
-          const indexNum = String(i + 1).padStart(3, '0');
-          // Fake hero stat for visual flair since it's not in the model yet, or use stars if available
-          const heroStat = proj.githubUrl ? "10K+" : "99.9%"; 
-          const heroLabel = proj.githubUrl ? "STARS" : "UPTIME";
-          const provenance = i % 2 === 0 ? "SOLO ARCHITECTURE" : "CORE TEAM";
+        <h2 className="reveal text-3xl sm:text-4xl lg:text-5xl font-display font-semibold text-[var(--text)] mb-12 tracking-tight">
+          Things I've built and run in production.
+        </h2>
 
-          return (
-            <div key={proj.id} className="reveal relative group">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                
-                {/* Image Side */}
-                <div className="relative aspect-video bg-[var(--bg-panel)] border border-[var(--line)] rounded overflow-hidden group-hover:border-[var(--cyan)] transition-colors">
-                  <div className="absolute inset-0 bg-[rgba(53,231,199,0.1)] opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none mix-blend-overlay" />
-                  {proj.imageUrl ? (
-                    <Image 
-                      src={proj.imageUrl} 
-                      alt={proj.title} 
-                      fill
-                      className="object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" 
+        {/* Project Cards List */}
+        <div className="flex flex-col gap-8">
+          {projects.map((proj, i) => {
+            const isLive = proj.liveUrl || proj.status === "live";
+            const isPrivate = !proj.githubUrl && !proj.liveUrl;
+
+            return (
+              <div
+                key={proj.id || i}
+                className="reveal bg-[var(--bg-panel)] border border-[var(--line)] rounded-[var(--radius)] p-6 sm:p-8 lg:p-10 relative overflow-hidden transition-all duration-300 hover:border-[var(--cyan)]/60 shadow-lg shadow-black/20 group"
+              >
+                {/* Subtle cyber background grid accent on right */}
+                <div
+                  className="absolute top-0 right-0 h-full w-32 opacity-10 pointer-events-none"
+                  style={{
+                    background:
+                      "repeating-linear-gradient(90deg, var(--cyan) 0 1px, transparent 1px 16px)",
+                  }}
+                />
+
+                {/* Top status header */}
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                  <div className="font-mono text-[11px] text-[var(--text-faint)] uppercase tracking-wider">
+                    {proj.category
+                      ? `SYSTEM // ${proj.category.toUpperCase()}`
+                      : "ARCHITECTURE // SYSTEM"}
+                  </div>
+
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--line)] bg-[var(--bg-panel-2)] font-mono text-[11px]">
+                    <span
+                      className={`w-2 h-2 rounded-full ${
+                        isPrivate
+                          ? "bg-[var(--amber)] shadow-[0_0_6px_rgba(255,166,69,0.6)]"
+                          : "bg-[var(--cyan)] shadow-[0_0_6px_rgba(53,231,199,0.6)] animate-pulse"
+                      }`}
                     />
-                  ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center font-mono text-[var(--line)] text-6xl">
-                      &lt; / &gt;
-                    </div>
-                  )}
-                  
-                  {/* Hero Stat Overlay */}
-                  <div className="absolute bottom-4 left-4 z-20 flex flex-col">
-                    <span className="font-display font-bold text-4xl text-white drop-shadow-md">{heroStat}</span>
-                    <span className="font-mono text-xs tracking-widest text-[var(--cyan)] uppercase drop-shadow-md">{heroLabel}</span>
+                    <span className="text-[var(--text-dim)] uppercase">
+                      {isPrivate ? "PRODUCTION · PROPRIETARY" : "DEPLOYED · ACTIVE"}
+                    </span>
                   </div>
                 </div>
 
-                {/* Content Side */}
-                <div className="relative z-10 flex flex-col items-start justify-center">
-                  
-                  {/* Ghost Numeral */}
-                  <div className="absolute -top-16 -right-8 font-display font-bold text-[180px] leading-none text-[var(--bg-panel-2)] select-none pointer-events-none opacity-50 overflow-hidden">
-                    {indexNum}
-                  </div>
+                {/* Title & Description */}
+                <h3 className="text-2xl sm:text-3xl font-display font-semibold text-[var(--text)] mb-4 group-hover:text-[var(--cyan)] transition-colors">
+                  {proj.title}
+                </h3>
 
-                  <div className="relative z-10 w-full">
-                    <div className="font-mono text-xs text-[var(--amber)] mb-4 tracking-widest uppercase flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-[var(--amber)] rounded-full" />
-                      {provenance}
-                    </div>
+                <p className="text-sm sm:text-base text-[var(--text-dim)] font-light leading-relaxed max-w-3xl mb-6">
+                  {proj.description}
+                </p>
 
-                    <h3 className="font-display text-3xl text-[var(--text)] mb-6 group-hover:text-[var(--cyan)] transition-colors">{proj.title}</h3>
-                    
-                    <p className="text-[var(--text-dim)] mb-8 text-lg font-light leading-relaxed">
-                      {proj.description}
-                    </p>
+                {/* Tech Stack Pills */}
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {proj.techStack?.map((tech: string, idx: number) => (
+                    <span
+                      key={idx}
+                      className="px-2.5 py-1 rounded bg-[var(--bg-panel-2)] border border-[var(--line)] font-mono text-xs text-[var(--text-dim)]"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
 
-                    <div className="flex gap-3 mb-8 flex-wrap">
-                      {proj.technologies.map((tech: string, idx: number) => (
-                        <span key={idx} className="font-mono text-xs border border-[var(--line)] px-3 py-1 rounded text-[var(--text-faint)]">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                {/* Action Links */}
+                <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-[var(--line)] font-mono text-xs">
+                  {proj.githubUrl && (
+                    <a
+                      href={proj.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 text-[var(--cyan)] hover:underline font-semibold"
+                    >
+                      <Code2 size={14} />
+                      <span>View repository</span>
+                      <ArrowUpRight size={14} />
+                    </a>
+                  )}
 
-                    <div className="flex gap-6">
-                      {proj.liveUrl && (
-                        <a href={proj.liveUrl} target="_blank" rel="noreferrer" className="font-mono text-sm text-[var(--cyan)] hover:text-white flex items-center gap-2 transition-colors">
-                          Deploy <span className="text-xs">↗</span>
-                        </a>
-                      )}
-                      {proj.githubUrl && (
-                        <a href={proj.githubUrl} target="_blank" rel="noreferrer" className="font-mono text-sm text-[var(--text-dim)] hover:text-white flex items-center gap-2 transition-colors">
-                          Repository <span className="text-xs">↗</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
+                  {proj.liveUrl && (
+                    <a
+                      href={proj.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 text-[var(--text-dim)] hover:text-[var(--cyan)] transition-colors"
+                    >
+                      <ExternalLink size={14} />
+                      <span>Live system demo</span>
+                      <ArrowUpRight size={14} />
+                    </a>
+                  )}
+
+                  {isPrivate && (
+                    <span className="text-[var(--text-faint)]">
+                      Proprietary architecture — happy to walk through design & telemetry
+                    </span>
+                  )}
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 }
+

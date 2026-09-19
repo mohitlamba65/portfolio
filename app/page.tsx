@@ -8,6 +8,7 @@ import ControlRoomSkills from "@/components/sections/ControlRoomSkills";
 import ControlRoomProjects from "@/components/sections/ControlRoomProjects";
 import ControlRoomExperience from "@/components/sections/ControlRoomExperience";
 import ControlRoomContact from "@/components/sections/ControlRoomContact";
+import ControlRoomFooter from "@/components/sections/ControlRoomFooter";
 
 export const dynamic = "force-dynamic";
 
@@ -15,19 +16,21 @@ export default async function Home() {
   const data = await PortfolioService.getPortfolio();
 
   return (
-    <div className="relative min-h-screen text-[var(--text)] bg-[var(--bg)] font-sans selection:bg-[var(--cyan)] selection:text-[#04120F]">
+    <div className="relative min-h-screen text-[var(--text)] bg-[var(--bg)] font-sans selection:bg-[var(--cyan)] selection:text-[#04120F] overflow-x-hidden">
       <ControlRoomCursor />
-      <ControlRoomNav avatarUrl={data.profile.avatarUrl} />
+      <ControlRoomNav avatarUrl={data.profile.navbarAvatarUrl} />
 
-      <main className="md:ml-[280px] max-w-5xl mx-auto px-6 md:px-12 w-full pb-32">
+      <main className="md:ml-[80px] w-full md:w-[calc(100%-80px)] min-h-screen overflow-x-hidden pt-16 md:pt-0">
         <ControlRoomHero profile={data.profile} />
         <ControlRoomAbout profile={data.profile} />
         <MarqueeTicker />
         <ControlRoomSkills skills={data.skills} />
         <ControlRoomProjects projects={data.projects} />
-        <ControlRoomExperience experience={data.experience} />
+        <ControlRoomExperience experiences={data.experiences} />
         <ControlRoomContact profile={data.profile} />
+        <ControlRoomFooter />
       </main>
     </div>
   );
 }
+

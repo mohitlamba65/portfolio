@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Skill, SkillCategory } from "@/types/portfolio";
-import { useTheme } from "@/components/theme/ThemeProvider";
 
 interface Skills3DSphereProps {
   skills: Skill[];
@@ -12,27 +11,24 @@ interface Skills3DSphereProps {
 }
 
 const CATEGORY_COLORS: Record<SkillCategory, string> = {
-  backend: "#35e7c7",
-  ai: "#ffa645",
-  data: "#38bdf8",
-  frontend: "#f43f5e",
-  infra: "#a855f7",
+  backend: "#35e7c7", // cyan
+  ai: "#ffa645",      // amber
+  data: "#35e7c7",
+  frontend: "#4E5A6A",
+  infra: "#FF5D5D",   // red-live
 };
 
 export default function Skills3DSphere({
   skills,
   filter,
-  onFilterChange,
 }: Skills3DSphereProps) {
   const mountRef = useRef<HTMLDivElement>(null);
-  const { theme } = useTheme();
   const [hoveredSkill, setHoveredSkill] = useState<{
     skill: Skill;
     x: number;
     y: number;
   } | null>(null);
 
-  // Keep a ref to the filter so the 3D animation loop updates without recreating the scene
   const filterRef = useRef(filter);
   useEffect(() => {
     filterRef.current = filter;
@@ -43,7 +39,7 @@ export default function Skills3DSphere({
     if (!container) return;
 
     const width = container.clientWidth;
-    const height = Math.min(Math.max(container.clientHeight, 480), 620);
+    const height = container.clientHeight;
 
     // Scene & Camera
     const scene = new THREE.Scene();
@@ -58,7 +54,7 @@ export default function Skills3DSphere({
     // Center Core sphere
     const coreGeometry = new THREE.SphereGeometry(12, 32, 32);
     const coreMaterial = new THREE.MeshBasicMaterial({
-      color: theme === "dark" ? 0x35e7c7 : 0x0d9488,
+      color: 0x35e7c7, // cyan
       wireframe: true,
       transparent: true,
       opacity: 0.7,
@@ -69,10 +65,10 @@ export default function Skills3DSphere({
     // Outer orbital rings
     const ringGeo = new THREE.RingGeometry(110, 111, 64);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: theme === "dark" ? 0xffffff : 0x000000,
+      color: 0xffffff,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.08,
+      opacity: 0.05,
     });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
     ringMesh.rotation.x = Math.PI / 2.5;
@@ -88,17 +84,16 @@ export default function Skills3DSphere({
     const phi = Math.PI * (3 - Math.sqrt(5)); // Golden angle
 
     skills.forEach((skill, i) => {
-      const y = 1 - (i / (skills.length - 1 || 1)) * 2; // -1 to 1
+      const y = 1 - (i / (skills.length - 1 || 1)) * 2; 
       const radiusAtY = Math.sqrt(1 - y * y);
       const theta = phi * i;
 
       const x = Math.cos(theta) * radiusAtY;
       const z = Math.sin(theta) * radiusAtY;
 
-      // Sphere mesh for each skill
       const nodeSize = 3.5 + (skill.level / 10) * 2.5;
       const nodeGeo = new THREE.SphereGeometry(nodeSize, 16, 16);
-      const nodeColor = new THREE.Color(CATEGORY_COLORS[skill.category] || "#ffffff");
+      const nodeColor = new THREE.Color(CATEGORY_COLORS[skill.category] || "#35e7c7");
       const nodeMat = new THREE.MeshBasicMaterial({
         color: nodeColor,
         transparent: true,
@@ -109,7 +104,6 @@ export default function Skills3DSphere({
       nodeMesh.position.set(x * radius, y * radius, z * radius);
       nodeMesh.userData = { skill };
 
-      // Line connecting to system core
       const lineMat = new THREE.LineBasicMaterial({
         color: nodeColor,
         transparent: true,
@@ -120,13 +114,12 @@ export default function Skills3DSphere({
         new THREE.Vector3(x * radius, y * radius, z * radius),
       ]);
       const line = new THREE.Line(lineGeo, lineMat);
+      
       orbitGroup.add(line);
-
       orbitGroup.add(nodeMesh);
       nodeMeshes.push(nodeMesh);
     });
 
-    // Drag interaction
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
     let rotationVelocity = { x: 0.002, y: 0.003 };
@@ -141,7 +134,6 @@ export default function Skills3DSphere({
       const mouseX = ((e.clientX - rect.left) / width) * 2 - 1;
       const mouseY = -((e.clientY - rect.top) / height) * 2 + 1;
 
-      // Raycaster for hover tooltip
       const raycaster = new THREE.Raycaster();
       raycaster.setFromCamera(new THREE.Vector2(mouseX, mouseY), camera);
       const intersects = raycaster.intersectObjects(nodeMeshes);
@@ -163,15 +155,9 @@ export default function Skills3DSphere({
       if (isDragging) {
         const deltaX = e.clientX - previousMousePosition.x;
         const deltaY = e.clientY - previousMousePosition.y;
-
         orbitGroup.rotation.y += deltaX * 0.006;
         orbitGroup.rotation.x += deltaY * 0.006;
-
-        rotationVelocity = {
-          x: deltaY * 0.001,
-          y: deltaX * 0.001,
-        };
-
+        rotationVelocity = { x: deltaY * 0.001, y: deltaX * 0.001 };
         previousMousePosition = { x: e.clientX, y: e.clientY };
       }
     };
@@ -184,22 +170,20 @@ export default function Skills3DSphere({
     window.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerup", onPointerUp);
 
-    // Resize
     const onResize = () => {
       if (!container) return;
       const newWidth = container.clientWidth;
-      camera.aspect = newWidth / height;
+      const newHeight = container.clientHeight;
+      camera.aspect = newWidth / newHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(newWidth, height);
+      renderer.setSize(newWidth, newHeight);
     };
     window.addEventListener("resize", onResize);
 
-    // Render loop
     let animId: number;
     const animate = () => {
       animId = requestAnimationFrame(animate);
 
-      // Inertia & slow rotation when not dragging
       if (!isDragging) {
         orbitGroup.rotation.y += rotationVelocity.y;
         orbitGroup.rotation.x += rotationVelocity.x;
@@ -210,7 +194,6 @@ export default function Skills3DSphere({
       coreMesh.rotation.y += 0.01;
       coreMesh.rotation.x += 0.005;
 
-      // Filter opacity handling
       const currentFilter = filterRef.current;
       nodeMeshes.forEach((mesh) => {
         const skill = mesh.userData.skill as Skill;
@@ -236,90 +219,33 @@ export default function Skills3DSphere({
         container.removeChild(renderer.domElement);
       }
     };
-  }, [skills, theme]);
+  }, [skills]);
 
   return (
-    <div className="relative w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl p-6 shadow-xl overflow-hidden">
-      {/* Top Filter Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 z-10 relative">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-teal-400 animate-pulse" />
-          <span className="text-xs font-mono tracking-wider uppercase text-slate-500 dark:text-slate-400">
-            3D Skills Constellation
-          </span>
-        </div>
-
-        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Skill filters">
-          {(["all", "backend", "ai", "data", "frontend", "infra"] as const).map((cat) => {
-            const isActive = filter === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => onFilterChange(cat)}
-                className={`px-3 py-1 rounded-full text-xs font-mono transition-all duration-200 ${
-                  isActive
-                    ? "bg-teal-500 text-white dark:bg-teal-400 dark:text-slate-950 font-semibold shadow-md shadow-teal-500/20"
-                    : "bg-slate-200/60 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-white/10"
-                }`}
-              >
-                {cat === "all" ? "All Systems" : cat === "ai" ? "AI / Agents" : cat}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 3D Canvas Mount */}
-      <div
-        ref={mountRef}
-        className="w-full h-[460px] cursor-grab active:cursor-grabbing relative flex items-center justify-center"
-      >
-        {/* Tooltip Overlay */}
-        {hoveredSkill && (
-          <div
-            className="absolute pointer-events-none z-30 transform -translate-x-1/2 -translate-y-full mb-3 px-3 py-2 rounded-lg bg-slate-900/95 dark:bg-black/90 border border-teal-500/40 text-white shadow-2xl backdrop-blur-md transition-all duration-75"
-            style={{ left: hoveredSkill.x, top: hoveredSkill.y }}
-          >
-            <div className="flex items-center gap-2">
-              <span
-                className="w-2 h-2 rounded-full"
-                style={{
-                  backgroundColor:
-                    CATEGORY_COLORS[hoveredSkill.skill.category] || "#35e7c7",
-                }}
-              />
-              <span className="text-sm font-semibold tracking-tight">
-                {hoveredSkill.skill.name}
-              </span>
-            </div>
-            <div className="flex items-center justify-between gap-4 mt-1 text-[11px] font-mono text-slate-400">
-              <span className="uppercase">{hoveredSkill.skill.category}</span>
-              <span className="text-teal-400 font-bold">
-                Level {hoveredSkill.skill.level}/10
-              </span>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Footer Instructions & Legend */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-slate-200 dark:border-white/5 text-xs text-slate-500 dark:text-slate-400 font-mono">
-        <div className="flex items-center gap-4">
-          {(Object.keys(CATEGORY_COLORS) as SkillCategory[]).map((cat) => (
-            <span key={cat} className="inline-flex items-center gap-1.5">
-              <span
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: CATEGORY_COLORS[cat] }}
-              />
-              <span className="capitalize">{cat}</span>
+    <div className="absolute inset-0 w-full h-full">
+      <div ref={mountRef} className="w-full h-full" />
+      
+      {/* Control Room Styled Tooltip */}
+      {hoveredSkill && (
+        <div
+          className="absolute pointer-events-none z-30 transform -translate-x-1/2 -translate-y-full mb-4 px-4 py-3 bg-[var(--bg-panel-2)] border border-[var(--cyan)] shadow-[0_0_15px_rgba(53,231,199,0.2)] font-mono transition-all duration-75"
+          style={{ left: hoveredSkill.x, top: hoveredSkill.y }}
+        >
+          <div className="flex items-center gap-2 border-b border-[var(--line)] pb-2 mb-2">
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: CATEGORY_COLORS[hoveredSkill.skill.category] || "#35e7c7" }}
+            />
+            <span className="text-sm font-bold text-[var(--text)] tracking-wider">
+              {hoveredSkill.skill.name.toUpperCase()}
             </span>
-          ))}
+          </div>
+          <div className="flex items-center justify-between gap-6 text-[10px] text-[var(--text-faint)] uppercase">
+            <span>CAT: {hoveredSkill.skill.category}</span>
+            <span className="text-[var(--cyan)]">PWR: {hoveredSkill.skill.level}/10</span>
+          </div>
         </div>
-        <div className="text-[11px] italic">
-          Drag to rotate orbit · hover node to inspect
-        </div>
-      </div>
+      )}
     </div>
   );
 }

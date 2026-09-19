@@ -16,8 +16,8 @@ export default function HeroCanvas() {
     let animationFrameId: number;
 
     const resize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
+      width = canvas.parentElement?.clientWidth || window.innerWidth;
+      height = canvas.parentElement?.clientHeight || window.innerHeight;
       canvas.width = width;
       canvas.height = height;
     };

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ArrowRight, Download, Terminal, Sparkles } from "lucide-react";
 import { PortfolioData } from "@/types/portfolio";
 import Hero3DNetwork from "@/components/3d/Hero3DNetwork";
+import { OperatorCard } from "@/components/ui/OperatorCard";
+import { AnimatedStat } from "@/components/ui/AnimatedStat";
 
 interface AboutViewProps {
   data: PortfolioData;
@@ -34,7 +36,17 @@ export default function AboutView({ data }: AboutViewProps) {
           {/* Bio Paragraphs */}
           <div className="space-y-4 text-slate-700 dark:text-slate-300 text-base sm:text-lg leading-relaxed font-normal">
             {profile.bioParagraphs.map((para, i) => (
-              <p key={i}>{para}</p>
+              <p key={i}>
+                {para.includes('harder half') ? (
+                  <>
+                    {para.split('harder half')[0]}
+                    <em className="accent-italic">harder half</em>
+                    {para.split('harder half')[1]}
+                  </>
+                ) : (
+                  para
+                )}
+              </p>
             ))}
           </div>
 
@@ -71,36 +83,7 @@ export default function AboutView({ data }: AboutViewProps) {
         {/* Right Cards Column (Profile Showcase + Metrics) */}
         <div className="lg:col-span-5 space-y-5">
           {/* Profile Showcase Card */}
-          <div className="p-5 rounded-2xl bg-white/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-white/10 shadow-xl backdrop-blur-xl transition-all duration-300 hover:border-teal-500/40">
-            <div className="flex items-center gap-4">
-              {/* Profile Card Photo (Distinct from Navbar avatar!) */}
-              <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-teal-500/50 bg-slate-950 flex-shrink-0 shadow-md">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={profile.profilePhotoUrl || "/default-avatar.svg"}
-                  alt={profile.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <div className="text-[11px] font-mono tracking-wider text-teal-600 dark:text-teal-400 font-bold uppercase">
-                  {profile.roleTitle}
-                </div>
-                <div className="text-lg font-bold text-slate-900 dark:text-white">
-                  {profile.subTitle}
-                </div>
-                <div className="text-xs font-mono text-slate-500 dark:text-slate-400 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>{profile.location}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4 pt-3 border-t border-slate-200/70 dark:border-white/5 text-xs text-slate-600 dark:text-slate-400 font-mono">
-              Status: <span className="text-teal-600 dark:text-teal-300 font-medium">{profile.availabilityStatus}</span>
-            </div>
-          </div>
+          <OperatorCard profile={profile} />
 
           {/* Metric Cards Grid (Matching screenshot numbers!) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -109,38 +92,38 @@ export default function AboutView({ data }: AboutViewProps) {
               <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                 USERS ON SYSTEMS I&apos;VE SHIPPED
               </div>
-              <div className="text-3xl sm:text-4xl font-extrabold font-mono text-teal-600 dark:text-teal-400">
-                {stats.usersServed}
+              <div className="text-3xl sm:text-4xl font-extrabold font-display text-[var(--signal-primary)]">
+                <AnimatedStat value={stats.usersServed} />
               </div>
             </div>
 
             {/* Metric 2 */}
-            <div className="p-5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/10 backdrop-blur-xl shadow-md transition-all hover:border-teal-500/30">
-              <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+            <div className="p-5 rounded-2xl bg-[var(--bg-panel)] border border-[var(--border-color)] transition-all hover:border-[var(--signal-ai)]">
+              <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-faint)] mb-2">
                 PUBLIC ACTIVITY SIGNAL
               </div>
-              <div className="text-3xl sm:text-4xl font-extrabold font-mono text-teal-600 dark:text-teal-400">
-                {stats.publicActivitySignal}
+              <div className="text-3xl sm:text-4xl font-extrabold font-display text-[var(--signal-ai)]">
+                <AnimatedStat value={stats.publicActivitySignal || 0} />
               </div>
             </div>
 
             {/* Metric 3 */}
-            <div className="p-5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/10 backdrop-blur-xl shadow-md transition-all hover:border-teal-500/30">
-              <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+            <div className="p-5 rounded-2xl bg-[var(--bg-panel)] border border-[var(--border-color)] transition-all hover:border-[var(--signal-data)]">
+              <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-faint)] mb-2">
                 SYSTEMS & PIPELINES
               </div>
-              <div className="text-3xl sm:text-4xl font-extrabold font-mono text-amber-500 dark:text-amber-400">
-                {stats.systemsShipped}
+              <div className="text-3xl sm:text-4xl font-extrabold font-display text-[var(--signal-data)]">
+                <AnimatedStat value={stats.systemsShipped || 0} />
               </div>
             </div>
 
             {/* Metric 4 */}
-            <div className="p-5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/10 backdrop-blur-xl shadow-md transition-all hover:border-teal-500/30">
-              <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+            <div className="p-5 rounded-2xl bg-[var(--bg-panel)] border border-[var(--border-color)] transition-all hover:border-[var(--signal-frontend)]">
+              <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-faint)] mb-2">
                 PRODUCTION RELIABILITY
               </div>
-              <div className="text-3xl sm:text-4xl font-extrabold font-mono text-cyan-500 dark:text-cyan-400">
-                {stats.uptimeSla}
+              <div className="text-3xl sm:text-4xl font-extrabold font-display text-[var(--signal-frontend)]">
+                <AnimatedStat value={stats.uptimeSla || "0"} />
               </div>
             </div>
           </div>

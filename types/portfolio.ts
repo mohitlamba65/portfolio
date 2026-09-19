@@ -4,7 +4,8 @@ export interface Skill {
   id: string;
   name: string;
   category: SkillCategory;
-  level: number; // 1 to 10
+  level: number; // 1 to 5 (shown as dots)
+  icon?: string | null; // simple-icons slug, null = use fallback glyph
 }
 
 export interface WorkExperience {
@@ -12,44 +13,59 @@ export interface WorkExperience {
   company: string;
   role: string;
   period: string;
-  location: string;
-  highlightMetric: string; // e.g., "5M+ users"
+  location?: string;
+  highlightMetric?: string;
   description: string;
-  bullets: string[];
-  techStack: string[];
+  bullets?: string[];
+  techStack?: string[];
 }
 
 export interface Project {
   id: string;
   title: string;
-  tagline: string;
+  tagline?: string;
+  eyebrow?: string;         // e.g. "WHATSAPP → LLM AGENT → TOOLS → WHATSAPP"
+  provenance?: string;      // e.g. "Built and maintained solo"
   description: string;
-  metrics?: string; // e.g. "99.99% uptime · 40ms p95"
+  status?: "live" | "building" | "private"; // controls badge colour
+  statusLabel?: string;     // e.g. "LIVE ON GITHUB", "PRODUCTION · PROPRIETARY"
+  heroStat?: {
+    value: string;          // e.g. "100%"
+    label: string;          // e.g. "async, webhook-driven"
+  };
+  metrics?: string;
   architectureNotes?: string;
   techStack: string[];
   liveUrl?: string;
   githubUrl?: string;
-  featured: boolean;
+  featured?: boolean;
 }
 
 export interface SystemStats {
-  usersServed: string;       // e.g. "5M+"
-  publicActivitySignal: number; // e.g. 2770
-  uptimeSla: string;         // e.g. "99.99%"
-  systemsShipped: number;    // e.g. 56
+  usersServed: string;            // e.g. "1M+"
+  githubContributions: number;    // e.g. 2770
+  totalCommits: number;           // e.g. 1500
+  publicRepos: number;            // e.g. 56
+  b2bClients?: number;            // e.g. 50
+  // Legacy fields kept for backwards compat
+  publicActivitySignal?: number;
+  uptimeSla?: string;
+  systemsShipped?: number;
 }
 
 export interface Profile {
   name: string;
-  roleTitle: string;         // e.g. "ENGINEER / BUILDER"
-  subTitle: string;          // e.g. "Backend + AI systems"
-  headline: string;          // "The interesting work starts after the request leaves the browser."
-  location: string;          // "Delhi, India · available"
-  availabilityStatus: string;// "Available for high-scale backend & AI architecture roles"
+  roleTitle?: string;
+  subTitle?: string;
+  headline?: string;
+  heroTag?: string;              // tagline paragraph shown on home panel
+  availabilityBadge?: string;    // eyebrow text e.g. "AVAILABLE FOR BACKEND · AI ENGINEERING ROLES"
+  location: string;
+  availabilityStatus?: string;
   bioParagraphs: string[];
-  navbarAvatarUrl: string;   // Specific photo for navbar/sidebar avatar
-  profilePhotoUrl: string;   // Specific photo for profile showcase card
-  resumeUrl: string;         // Path to PDF resume
+  navbarAvatarUrl: string;       // photo used in nav logo area
+  profilePhotoUrl?: string;      // photo used in about section
+  resumeUrl: string;
   socialLinks: {
     github: string;
     linkedin: string;

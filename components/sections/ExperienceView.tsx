@@ -73,7 +73,7 @@ export default function ExperienceView({ experiences }: ExperienceViewProps) {
 
               {/* Bullets */}
               <ul className="space-y-2.5 mb-6 text-sm text-slate-600 dark:text-slate-300">
-                {exp.bullets.map((bullet, idx) => (
+                {(exp.bullets ?? []).map((bullet, idx) => (
                   <li key={idx} className="flex items-start gap-2.5">
                     <CheckCircle2
                       size={16}
@@ -89,7 +89,7 @@ export default function ExperienceView({ experiences }: ExperienceViewProps) {
                 <span className="text-[11px] font-mono uppercase text-slate-400 mr-2">
                   Stack:
                 </span>
-                {exp.techStack.map((tech) => (
+                {(exp.techStack ?? []).map((tech) => (
                   <span
                     key={tech}
                     className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300"

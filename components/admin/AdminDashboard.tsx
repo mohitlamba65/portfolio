@@ -392,11 +392,11 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
 
             <div>
               <label className="block text-xs font-mono uppercase text-slate-400 mb-1">
-                Main Hero Headline
+                Main Hero Headline (SEO / metadata)
               </label>
               <textarea
                 rows={2}
-                value={data.profile.headline}
+                value={data.profile.headline || ""}
                 onChange={(e) =>
                   setData({
                     ...data,
@@ -409,11 +409,47 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
 
             <div>
               <label className="block text-xs font-mono uppercase text-slate-400 mb-1">
+                Home Page Tagline (Hero Tag paragraph)
+              </label>
+              <textarea
+                rows={3}
+                value={data.profile.heroTag || ""}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    profile: { ...data.profile, heroTag: e.target.value },
+                  })
+                }
+                className="w-full px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-teal-500 text-sm"
+                placeholder="I build the parts of a product most people never see..."
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono uppercase text-slate-400 mb-1">
+                Availability Badge (eyebrow on Home page)
+              </label>
+              <input
+                type="text"
+                value={data.profile.availabilityBadge || ""}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    profile: { ...data.profile, availabilityBadge: e.target.value },
+                  })
+                }
+                className="w-full px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-teal-500 text-sm"
+                placeholder="AVAILABLE FOR BACKEND · AI ENGINEERING ROLES"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono uppercase text-slate-400 mb-1">
                 Availability Status Message
               </label>
               <input
                 type="text"
-                value={data.profile.availabilityStatus}
+                value={data.profile.availabilityStatus || ""}
                 onChange={(e) =>
                   setData({
                     ...data,
@@ -423,6 +459,7 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
                 className="w-full px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-teal-500 text-sm"
               />
             </div>
+
 
             {/* Bio Paragraphs */}
             <div className="space-y-3">
@@ -876,7 +913,7 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
                     </label>
                     <textarea
                       rows={3}
-                      value={exp.bullets.join("\n")}
+                      value={(exp.bullets ?? []).join("\n")}
                       onChange={(e) => {
                         const updated = [...data.experiences];
                         updated[idx].bullets = e.target.value
@@ -895,7 +932,7 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
                     </label>
                     <input
                       type="text"
-                      value={exp.techStack.join(", ")}
+                      value={(exp.techStack ?? []).join(", ")}
                       onChange={(e) => {
                         const updated = [...data.experiences];
                         updated[idx].techStack = e.target.value
@@ -1222,25 +1259,22 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
         {activeTab === "stats" && (
           <div className="p-8 rounded-2xl bg-slate-900/70 border border-slate-800 space-y-6">
             <h2 className="text-xl font-bold text-white">
-              System Scale &amp; Impact Stats
+              Dashboard Strip Stats
             </h2>
             <p className="text-xs text-slate-400">
-              Update the prominent metric cards shown on the About section and recruiters overview.
+              These 4 numbers appear in the Home page dashboard strip and the About stat panel.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-mono uppercase text-slate-400 mb-1">
-                  Users on Systems I&apos;ve Shipped (e.g. &quot;5M+&quot;)
+                  Users on Systems Shipped (e.g. &quot;1M+&quot;)
                 </label>
                 <input
                   type="text"
                   value={data.stats.usersServed}
                   onChange={(e) =>
-                    setData({
-                      ...data,
-                      stats: { ...data.stats, usersServed: e.target.value },
-                    })
+                    setData({ ...data, stats: { ...data.stats, usersServed: e.target.value } })
                   }
                   className="w-full px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono text-lg text-teal-400"
                 />
@@ -1248,19 +1282,13 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
 
               <div>
                 <label className="block text-xs font-mono uppercase text-slate-400 mb-1">
-                  Public Activity Signal (e.g. 2770)
+                  GitHub Contributions (e.g. 2770)
                 </label>
                 <input
                   type="number"
-                  value={data.stats.publicActivitySignal}
+                  value={data.stats.githubContributions || 0}
                   onChange={(e) =>
-                    setData({
-                      ...data,
-                      stats: {
-                        ...data.stats,
-                        publicActivitySignal: parseInt(e.target.value) || 0,
-                      },
-                    })
+                    setData({ ...data, stats: { ...data.stats, githubContributions: parseInt(e.target.value) || 0 } })
                   }
                   className="w-full px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono text-lg text-teal-400"
                 />
@@ -1268,19 +1296,13 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
 
               <div>
                 <label className="block text-xs font-mono uppercase text-slate-400 mb-1">
-                  Systems &amp; Pipelines Shipped (e.g. 56)
+                  Total Commits (e.g. 1500)
                 </label>
                 <input
                   type="number"
-                  value={data.stats.systemsShipped}
+                  value={data.stats.totalCommits || 0}
                   onChange={(e) =>
-                    setData({
-                      ...data,
-                      stats: {
-                        ...data.stats,
-                        systemsShipped: parseInt(e.target.value) || 0,
-                      },
-                    })
+                    setData({ ...data, stats: { ...data.stats, totalCommits: parseInt(e.target.value) || 0 } })
                   }
                   className="w-full px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono text-lg text-amber-400"
                 />
@@ -1288,16 +1310,27 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
 
               <div>
                 <label className="block text-xs font-mono uppercase text-slate-400 mb-1">
-                  Production Reliability SLA (e.g. &quot;99.99%&quot;)
+                  Public Repos (e.g. 56)
                 </label>
                 <input
-                  type="text"
-                  value={data.stats.uptimeSla}
+                  type="number"
+                  value={data.stats.publicRepos || 0}
                   onChange={(e) =>
-                    setData({
-                      ...data,
-                      stats: { ...data.stats, uptimeSla: e.target.value },
-                    })
+                    setData({ ...data, stats: { ...data.stats, publicRepos: parseInt(e.target.value) || 0 } })
+                  }
+                  className="w-full px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono text-lg text-amber-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono uppercase text-slate-400 mb-1">
+                  B2B Clients on GTM Platform (e.g. 50)
+                </label>
+                <input
+                  type="number"
+                  value={data.stats.b2bClients || 0}
+                  onChange={(e) =>
+                    setData({ ...data, stats: { ...data.stats, b2bClients: parseInt(e.target.value) || 0 } })
                   }
                   className="w-full px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono text-lg text-cyan-400"
                 />

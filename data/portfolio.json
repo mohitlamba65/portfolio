@@ -14,8 +14,8 @@
       "More recently, at Mednex, I helped build an autonomous GTM AI platform now running campaigns for 50+ B2B clients across thousands of leads — agentic orchestration, RAG, and list-building pipelines, not just a thin LLM wrapper.",
       "I design around SOLID principles and layered boundaries — Clean and Hexagonal Architecture — because six months from now, someone (often me) has to change this code without fear."
     ],
-    "navbarAvatarUrl": "/default-avatar.svg",
-    "profilePhotoUrl": "/default-avatar.svg",
+    "navbarAvatarUrl": "/uploads/avatar-nav-1789790687560.jpg",
+    "profilePhotoUrl": "/uploads/avatar-profile-1789790694381.jpg",
     "resumeUrl": "/resume.pdf",
     "socialLinks": {
       "github": "https://github.com/mohitlamba65",
@@ -39,7 +39,14 @@
       "period": "Current",
       "description": "Helped build an autonomous GTM AI platform — agent orchestration, RAG, and the backend infrastructure that keeps it running for 50+ B2B clients.",
       "bullets": [],
-      "techStack": ["Node.js", "TypeScript", "LangGraph", "LangChain", "RAG", "PostgreSQL"]
+      "techStack": [
+        "Node.js",
+        "TypeScript",
+        "LangGraph",
+        "LangChain",
+        "RAG",
+        "PostgreSQL"
+      ]
     },
     {
       "id": "exp-ey",
@@ -48,7 +55,14 @@
       "period": "Previous",
       "description": "Owned backend systems for a high-traffic messaging product — APIs, webhooks, Redis Streams, async processing. The project that shaped how I think about reliability under real load.",
       "bullets": [],
-      "techStack": ["Node.js", "TypeScript", "Redis Streams", "RabbitMQ", "PostgreSQL", "WhatsApp Cloud API"]
+      "techStack": [
+        "Node.js",
+        "TypeScript",
+        "Redis Streams",
+        "RabbitMQ",
+        "PostgreSQL",
+        "WhatsApp Cloud API"
+      ]
     },
     {
       "id": "exp-foundations",
@@ -69,8 +83,17 @@
       "description": "A backend-first AI agent that turns WhatsApp into a full tool-calling interface. The interesting part isn't the chat UI — it's the orchestration underneath: async webhook processing, tool-calling loops, and graceful failure when the LLM or a tool times out mid-conversation.",
       "status": "live",
       "statusLabel": "LIVE ON GITHUB",
-      "heroStat": { "value": "100%", "label": "async, webhook-driven" },
-      "techStack": ["LangChain", "LangGraph", "Node.js", "WhatsApp Cloud API", "Webhooks"],
+      "heroStat": {
+        "value": "100%",
+        "label": "async, webhook-driven"
+      },
+      "techStack": [
+        "LangChain",
+        "LangGraph",
+        "Node.js",
+        "WhatsApp Cloud API",
+        "Webhooks"
+      ],
       "githubUrl": "https://github.com/mohitlamba65/ToolTap",
       "featured": true
     },
@@ -82,8 +105,17 @@
       "description": "AI-driven go-to-market workflows — ICP generation, list building, market research, and personalized copywriting, running as coordinated agents rather than a single prompt. I worked across both the AI layer and the backend feeding it: agent orchestration, external data providers, and business-context processing.",
       "status": "private",
       "statusLabel": "PRODUCTION . PROPRIETARY",
-      "heroStat": { "value": "50+", "label": "B2B clients running campaigns" },
-      "techStack": ["AI Agents", "LangGraph", "Node.js", "PostgreSQL", "RAG"],
+      "heroStat": {
+        "value": "50+",
+        "label": "B2B clients running campaigns"
+      },
+      "techStack": [
+        "AI Agents",
+        "LangGraph",
+        "Node.js",
+        "PostgreSQL",
+        "RAG"
+      ],
       "featured": true
     },
     {
@@ -100,34 +132,202 @@
     }
   ],
   "skills": [
-    { "id": "nodejs", "name": "Node.js", "category": "backend", "level": 5, "icon": "nodedotjs" },
-    { "id": "typescript", "name": "TypeScript", "category": "backend", "level": 5, "icon": "typescript" },
-    { "id": "express", "name": "Express", "category": "backend", "level": 4, "icon": "express" },
-    { "id": "rest-apis", "name": "REST APIs", "category": "backend", "level": 5, "icon": null },
-    { "id": "rabbitmq", "name": "RabbitMQ", "category": "backend", "level": 3, "icon": "rabbitmq" },
-    { "id": "kafka", "name": "Kafka", "category": "backend", "level": 3, "icon": "apachekafka" },
-    { "id": "system-design", "name": "System Design", "category": "backend", "level": 4, "icon": null },
-    { "id": "langgraph", "name": "LangGraph", "category": "ai", "level": 4, "icon": null },
-    { "id": "langchain", "name": "LangChain", "category": "ai", "level": 4, "icon": null },
-    { "id": "rag", "name": "RAG", "category": "ai", "level": 4, "icon": null },
-    { "id": "mcp", "name": "MCP", "category": "ai", "level": 3, "icon": null },
-    { "id": "llm-apis", "name": "LLM APIs", "category": "ai", "level": 4, "icon": null },
-    { "id": "postgresql", "name": "PostgreSQL", "category": "data", "level": 4, "icon": "postgresql" },
-    { "id": "mongodb", "name": "MongoDB", "category": "data", "level": 4, "icon": "mongodb" },
-    { "id": "redis", "name": "Redis", "category": "data", "level": 4, "icon": "redis" },
-    { "id": "mongoose", "name": "Mongoose", "category": "data", "level": 3, "icon": null },
-    { "id": "prisma", "name": "Prisma", "category": "data", "level": 3, "icon": "prisma" },
-    { "id": "react", "name": "React", "category": "frontend", "level": 4, "icon": "react" },
-    { "id": "nextjs", "name": "Next.js", "category": "frontend", "level": 3, "icon": "nextdotjs" },
-    { "id": "tailwind", "name": "Tailwind CSS", "category": "frontend", "level": 4, "icon": "tailwindcss" },
-    { "id": "tanstack-query", "name": "TanStack Query", "category": "frontend", "level": 3, "icon": "reactquery" },
-    { "id": "shadcn", "name": "shadcn/ui", "category": "frontend", "level": 3, "icon": "shadcnui" },
-    { "id": "docker", "name": "Docker", "category": "infra", "level": 4, "icon": "docker" },
-    { "id": "aws", "name": "AWS", "category": "infra", "level": 3, "icon": "amazonaws" },
-    { "id": "cicd", "name": "CI/CD", "category": "infra", "level": 4, "icon": "githubactions" },
-    { "id": "grafana", "name": "Grafana", "category": "infra", "level": 3, "icon": "grafana" },
-    { "id": "prometheus", "name": "Prometheus", "category": "infra", "level": 3, "icon": "prometheus" },
-    { "id": "k6", "name": "k6", "category": "infra", "level": 2, "icon": "k6" }
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "category": "backend",
+      "level": 5,
+      "icon": "nodedotjs"
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "category": "backend",
+      "level": 5,
+      "icon": "typescript"
+    },
+    {
+      "id": "express",
+      "name": "Express",
+      "category": "backend",
+      "level": 4,
+      "icon": "express"
+    },
+    {
+      "id": "rest-apis",
+      "name": "REST APIs",
+      "category": "backend",
+      "level": 5,
+      "icon": null
+    },
+    {
+      "id": "rabbitmq",
+      "name": "RabbitMQ",
+      "category": "backend",
+      "level": 3,
+      "icon": "rabbitmq"
+    },
+    {
+      "id": "kafka",
+      "name": "Kafka",
+      "category": "backend",
+      "level": 3,
+      "icon": "apachekafka"
+    },
+    {
+      "id": "system-design",
+      "name": "System Design",
+      "category": "backend",
+      "level": 4,
+      "icon": null
+    },
+    {
+      "id": "langgraph",
+      "name": "LangGraph",
+      "category": "ai",
+      "level": 4,
+      "icon": null
+    },
+    {
+      "id": "langchain",
+      "name": "LangChain",
+      "category": "ai",
+      "level": 4,
+      "icon": null
+    },
+    {
+      "id": "rag",
+      "name": "RAG",
+      "category": "ai",
+      "level": 4,
+      "icon": null
+    },
+    {
+      "id": "mcp",
+      "name": "MCP",
+      "category": "ai",
+      "level": 3,
+      "icon": null
+    },
+    {
+      "id": "llm-apis",
+      "name": "LLM APIs",
+      "category": "ai",
+      "level": 4,
+      "icon": null
+    },
+    {
+      "id": "postgresql",
+      "name": "PostgreSQL",
+      "category": "data",
+      "level": 4,
+      "icon": "postgresql"
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "category": "data",
+      "level": 4,
+      "icon": "mongodb"
+    },
+    {
+      "id": "redis",
+      "name": "Redis",
+      "category": "data",
+      "level": 4,
+      "icon": "redis"
+    },
+    {
+      "id": "mongoose",
+      "name": "Mongoose",
+      "category": "data",
+      "level": 3,
+      "icon": null
+    },
+    {
+      "id": "prisma",
+      "name": "Prisma",
+      "category": "data",
+      "level": 3,
+      "icon": "prisma"
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "category": "frontend",
+      "level": 4,
+      "icon": "react"
+    },
+    {
+      "id": "nextjs",
+      "name": "Next.js",
+      "category": "frontend",
+      "level": 3,
+      "icon": "nextdotjs"
+    },
+    {
+      "id": "tailwind",
+      "name": "Tailwind CSS",
+      "category": "frontend",
+      "level": 4,
+      "icon": "tailwindcss"
+    },
+    {
+      "id": "tanstack-query",
+      "name": "TanStack Query",
+      "category": "frontend",
+      "level": 3,
+      "icon": "reactquery"
+    },
+    {
+      "id": "shadcn",
+      "name": "shadcn/ui",
+      "category": "frontend",
+      "level": 3,
+      "icon": "shadcnui"
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "category": "infra",
+      "level": 4,
+      "icon": "docker"
+    },
+    {
+      "id": "aws",
+      "name": "AWS",
+      "category": "infra",
+      "level": 3,
+      "icon": "amazonaws"
+    },
+    {
+      "id": "cicd",
+      "name": "CI/CD",
+      "category": "infra",
+      "level": 4,
+      "icon": "githubactions"
+    },
+    {
+      "id": "grafana",
+      "name": "Grafana",
+      "category": "infra",
+      "level": 3,
+      "icon": "grafana"
+    },
+    {
+      "id": "prometheus",
+      "name": "Prometheus",
+      "category": "infra",
+      "level": 3,
+      "icon": "prometheus"
+    },
+    {
+      "id": "k6",
+      "name": "k6",
+      "category": "infra",
+      "level": 2,
+      "icon": "k6"
+    }
   ],
-  "lastUpdated": "2026-09-19T08:00:00Z"
+  "lastUpdated": "2026-09-19T04:05:03.052Z"
 }

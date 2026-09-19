@@ -1,44 +1,37 @@
 import type { Metadata } from "next";
+import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import PortfolioShell from "@/components/layout/PortfolioShell";
 import { PortfolioService } from "@/services/portfolio-service";
+
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--display" });
+const inter = Inter({ subsets: ["latin"], variable: "--sans" });
+const ibmPlexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--mono" });
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await PortfolioService.getPortfolio();
   return {
-    title: `${data.profile.name} — ${data.profile.subTitle}`,
+    title: `${data.profile.name} — Backend & AI Systems Engineer`,
     description: data.profile.headline,
     keywords: [
-      "Mohit Lamba",
       "Backend Engineer",
       "AI Systems",
-      "LangGraph",
-      "RabbitMQ",
       "Distributed Systems",
-      "5M Users Scale",
     ],
     authors: [{ name: data.profile.name }],
   };
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const portfolioData = await PortfolioService.getPortfolio();
-
   return (
-    <html lang="en" className="dark h-full antialiased" suppressHydrationWarning>
-      <body className="min-h-full flex flex-col font-sans bg-[var(--background)] text-[var(--foreground)]">
-        <ThemeProvider>
-          <PortfolioShell initialData={portfolioData}>
-            {children}
-          </PortfolioShell>
-        </ThemeProvider>
+    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable}`}>
+      <body>
+        {children}
       </body>
     </html>
   );

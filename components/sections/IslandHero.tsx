@@ -14,7 +14,6 @@ const roles = ["Backend Engineer", "AI / Agentic Systems Builder", "Full Stack D
 export default function IslandHero({ data, onTabChange }: IslandHeroProps) {
   const { profile, stats } = data;
   const sectionRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [typedRole, setTypedRole] = useState("Backend Engineer");
 
   // Typing animation
@@ -76,125 +75,6 @@ export default function IslandHero({ data, onTabChange }: IslandHeroProps) {
     });
   }, []);
 
-  // Canvas: living starfield with depth + mouse gravity + shooting stars
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    interface Particle {
-      x: number; y: number;
-      baseVx: number; baseVy: number;
-      vx: number; vy: number;
-      r: number; layer: number;
-    }
-
-    let nw = 0, nh = 0;
-    let nodes: Particle[] = [];
-    let mouseX = -9999, mouseY = -9999;
-    let shootingStar: { x: number; y: number; vx: number; vy: number; life: number } | null = null;
-    let animId: number;
-
-    const onMouseMove = (e: MouseEvent) => { mouseX = e.clientX; mouseY = e.clientY; };
-    window.addEventListener("mousemove", onMouseMove);
-
-    const isDark = () => document.documentElement.getAttribute("data-theme") !== "light";
-
-    const resize = () => {
-      nw = canvas.width = window.innerWidth;
-      nh = canvas.height = window.innerHeight;
-      nodes = [];
-      const count = Math.floor((nw * nh) / 26000);
-      for (let i = 0; i < count; i++) {
-        const layer = Math.random() < 0.55 ? 0 : 1;
-        nodes.push({
-          x: Math.random() * nw, y: Math.random() * nh,
-          baseVx: (Math.random() - .5) * (layer ? 0.35 : 0.15),
-          baseVy: (Math.random() - .5) * (layer ? 0.35 : 0.15),
-          vx: 0, vy: 0,
-          r: layer ? 1.6 + Math.random() * 1.2 : 0.8 + Math.random() * 0.6,
-          layer
-        });
-      }
-    };
-
-    const maybeSpawnStar = () => {
-      if (shootingStar) return;
-      if (Math.random() < 0.0025) {
-        const fromLeft = Math.random() < 0.5;
-        shootingStar = {
-          x: fromLeft ? -50 : nw + 50, y: Math.random() * nh * 0.5,
-          vx: (fromLeft ? 1 : -1) * 9, vy: 4.5, life: 1
-        };
-      }
-    };
-
-    const draw = () => {
-      ctx.clearRect(0, 0, nw, nh);
-      const rgb = isDark() ? "255,143,77" : "255,123,41";
-
-      nodes.forEach(n => {
-        const dx = n.x - mouseX, dy = n.y - mouseY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        let gx = 0, gy = 0;
-        if (dist < 140) {
-          const force = (1 - dist / 140) * 0.35;
-          gx = (dx / (dist || 1)) * force;
-          gy = (dy / (dist || 1)) * force;
-        }
-        n.vx += (n.baseVx - n.vx) * 0.02 + gx * 0.05;
-        n.vy += (n.baseVy - n.vy) * 0.02 + gy * 0.05;
-        n.x += n.vx; n.y += n.vy;
-        if (n.x < -10) n.x = nw + 10; if (n.x > nw + 10) n.x = -10;
-        if (n.y < -10) n.y = nh + 10; if (n.y > nh + 10) n.y = -10;
-      });
-
-      const near = nodes.filter(n => n.layer === 1);
-      for (let i = 0; i < near.length; i++) {
-        for (let j = i + 1; j < near.length; j++) {
-          const dx = near[i].x - near[j].x, dy = near[i].y - near[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx.strokeStyle = `rgba(${rgb},${0.09 * (1 - dist / 120)})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(near[i].x, near[i].y); ctx.lineTo(near[j].x, near[j].y); ctx.stroke();
-          }
-        }
-      }
-
-      nodes.forEach(n => {
-        ctx.fillStyle = `rgba(${rgb},${n.layer ? 0.55 : 0.28})`;
-        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill();
-      });
-
-      maybeSpawnStar();
-      if (shootingStar) {
-        const s = shootingStar;
-        s.x += s.vx; s.y += s.vy; s.life -= 0.02;
-        if (s.life <= 0 || s.x < -100 || s.x > nw + 100 || s.y > nh + 100) {
-          shootingStar = null;
-        } else {
-          const grad = ctx.createLinearGradient(s.x, s.y, s.x - s.vx * 8, s.y - s.vy * 8);
-          grad.addColorStop(0, `rgba(${rgb},${s.life})`);
-          grad.addColorStop(1, `rgba(${rgb},0)`);
-          ctx.strokeStyle = grad; ctx.lineWidth = 1.6;
-          ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.vx * 8, s.y - s.vy * 8); ctx.stroke();
-        }
-      }
-
-      animId = requestAnimationFrame(draw);
-    };
-
-    resize();
-    draw();
-    window.addEventListener("resize", () => { resize(); });
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("mousemove", onMouseMove);
-    };
-  }, []);
-
   const modules = [
     { id: "about", num: "01", title: "About", desc: "Who I am, how I think, what I care about." },
     { id: "stack", num: "02", title: "Stack", desc: "The tools I actually reach for." },
@@ -204,7 +84,6 @@ export default function IslandHero({ data, onTabChange }: IslandHeroProps) {
 
   return (
     <div ref={sectionRef} className="tab-panel active" id="home" data-panel>
-      <canvas ref={canvasRef} id="home-canvas" />
       <div className="panel-inner">
         <div className="hero-eyebrow reveal-item">
           <span className="dot" />

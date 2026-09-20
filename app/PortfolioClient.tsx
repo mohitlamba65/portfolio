@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { PortfolioData } from "@/types/portfolio";
 import IslandCursor from "@/components/IslandCursor";
+import StarfieldCanvas from "@/components/StarfieldCanvas";
 import IslandNav from "@/components/IslandNav";
 import IslandHero from "@/components/sections/IslandHero";
 import IslandAbout from "@/components/sections/IslandAbout";
@@ -113,6 +114,7 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
       className="relative min-h-screen overflow-x-hidden"
       style={{ background: "var(--bg)", color: "var(--text)" }}
     >
+      <StarfieldCanvas />
       <IslandCursor />
       <IslandNav
         activeTab={activeTab}
@@ -120,7 +122,7 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
         avatarUrl={data.profile.navbarAvatarUrl}
       />
 
-      <main>
+      <main className="relative z-10">
         <IslandHero data={data} onTabChange={goToTab} />
         <IslandAbout profile={data.profile} stats={data.stats} />
         <IslandStack skills={data.skills} />

@@ -25,10 +25,12 @@ export default function IslandNav({ activeTab, onTabChange, avatarUrl }: IslandN
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
-    const saved = localStorage.getItem("theme") as "dark" | "light" | null;
+    const saved = (localStorage.getItem("theme") || localStorage.getItem("portfolio-theme")) as "dark" | "light" | null;
     if (saved) {
       setTheme(saved);
       document.documentElement.setAttribute("data-theme", saved);
+      document.documentElement.classList.remove("dark", "light");
+      document.documentElement.classList.add(saved);
     }
   }, []);
 
@@ -42,7 +44,10 @@ export default function IslandNav({ activeTab, onTabChange, avatarUrl }: IslandN
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
     localStorage.setItem("theme", next);
+    localStorage.setItem("portfolio-theme", next);
     document.documentElement.setAttribute("data-theme", next);
+    document.documentElement.classList.remove("dark", "light");
+    document.documentElement.classList.add(next);
   };
 
   const handleTab = (tab: Tab) => {

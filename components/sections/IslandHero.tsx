@@ -132,7 +132,7 @@ export default function IslandHero({ data, onTabChange }: IslandHeroProps) {
 
     const draw = () => {
       ctx.clearRect(0, 0, nw, nh);
-      const rgb = isDark() ? "255,143,77" : "184,92,30";
+      const rgb = isDark() ? "255,143,77" : "255,123,41";
 
       nodes.forEach(n => {
         const dx = n.x - mouseX, dy = n.y - mouseY;

@@ -103,7 +103,6 @@ export default function IslandStack({ skills }: IslandStackProps) {
         <div className="kicker">STACK</div>
         <h2 className="h2 reveal-item">Tools I actually reach for.</h2>
         <p style={{ color: "var(--text-dim)", maxWidth: "60ch", marginBottom: "30px" }} className="reveal-item">
-          Real icons, real color, no metaphors. Hover a tile, filter by category, or just look around.
         </p>
 
         <div className="stack-toolbar reveal-item">

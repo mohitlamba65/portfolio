@@ -86,25 +86,6 @@ export default function IslandNav({ activeTab, onTabChange, avatarUrl }: IslandN
           Get in touch
         </button>
 
-        {/* Theme toggle */}
-        <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
-          {/* Moon icon (dark mode) */}
-          <svg
-            className={theme === "dark" ? "" : "hidden"}
-            viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="15" height="15"
-          >
-            <path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z" />
-          </svg>
-          {/* Sun icon (light mode) */}
-          <svg
-            className={theme === "light" ? "" : "hidden"}
-            viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="15" height="15"
-          >
-            <circle cx="12" cy="12" r="4" />
-            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-          </svg>
-        </button>
-
         {/* Hamburger */}
         <button className="hamburger" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
@@ -112,6 +93,26 @@ export default function IslandNav({ activeTab, onTabChange, avatarUrl }: IslandN
           </svg>
         </button>
       </nav>
+
+      <button
+        className={`theme-toggle theme-toggle-standalone${scrolled ? " scrolled" : ""}`}
+        onClick={toggleTheme}
+        aria-label="Toggle theme"
+      >
+        <svg
+          className={theme === "dark" ? "" : "hidden"}
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="15" height="15"
+        >
+          <path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z" />
+        </svg>
+        <svg
+          className={theme === "light" ? "" : "hidden"}
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="15" height="15"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </svg>
+      </button>
 
       {/* Mobile menu */}
       <div id="mobile-menu" className={mobileOpen ? "open" : ""}>

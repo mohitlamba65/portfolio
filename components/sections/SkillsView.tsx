@@ -70,7 +70,6 @@ export default function SkillsView({ skills }: SkillsViewProps) {
           Tools I actually reach for.
         </h2>
         <p className="text-[16.5px] text-[var(--text-dim)] max-w-[60ch] mb-[30px]">
-          Real icons, real color, no metaphors. Hover a tile, filter by category, or just look around.
         </p>
       </div>
 

@@ -80,6 +80,7 @@ export default function IslandHero({ data, onTabChange }: IslandHeroProps) {
     { id: "stack", num: "02", title: "Stack", desc: "The tools I actually reach for." },
     { id: "work", num: "03", title: "Work", desc: "Things I've built and shipped." },
     { id: "experience", num: "04", title: "Experience", desc: "How I got here." },
+    { id: "resume", num: "05", title: "Resume", desc: "Career story and PDF download." },
   ];
 
   return (
@@ -103,6 +104,13 @@ export default function IslandHero({ data, onTabChange }: IslandHeroProps) {
 
         <div className="hero-cta reveal-item">
           <button className="btn btn-primary" onClick={() => onTabChange("work")}>See what I&apos;ve shipped</button>
+          {profile.resumeUrl ? (
+            <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+              Download resume
+            </a>
+          ) : (
+            <button className="btn btn-ghost" onClick={() => onTabChange("resume")}>View resume</button>
+          )}
           <button className="btn btn-ghost" onClick={() => onTabChange("contact")}>Get in touch</button>
         </div>
 

@@ -10,11 +10,12 @@ import IslandAbout from "@/components/sections/IslandAbout";
 import IslandStack from "@/components/sections/IslandStack";
 import IslandWork from "@/components/sections/IslandWork";
 import IslandExperience from "@/components/sections/IslandExperience";
+import IslandResume from "@/components/sections/IslandResume";
 import IslandContact from "@/components/sections/IslandContact";
 import IslandFooter from "@/components/sections/IslandFooter";
 import gsap from "gsap";
 
-type Tab = "home" | "about" | "stack" | "work" | "experience" | "contact";
+type Tab = "home" | "about" | "stack" | "work" | "experience" | "resume" | "contact";
 
 export default function PortfolioClient({ data }: { data: PortfolioData }) {
   const [activeTab, setActiveTab] = useState<Tab>("home");
@@ -23,7 +24,7 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
   // Init from URL hash
   useEffect(() => {
     const hash = window.location.hash.replace("#", "") as Tab;
-    const valid: Tab[] = ["home", "about", "stack", "work", "experience", "contact"];
+    const valid: Tab[] = ["home", "about", "stack", "work", "experience", "resume", "contact"];
     if (hash && valid.includes(hash)) {
       // Direct show without animation on first load
       document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
@@ -64,14 +65,14 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
           gsap.fromTo(newPanel, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" });
 
           // Animate items inside new panel
-          const items = newPanel.querySelectorAll<HTMLElement>(".reveal-item, .principle, .proj-card, .tl-item, .module, .stack-card");
+          const items = newPanel.querySelectorAll<HTMLElement>(".reveal-item, .principle, .proj-card, .tl-item, .module, .stack-card, .resume-block, .resume-project-card");
           gsap.fromTo(items, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, stagger: .05, ease: "power2.out", delay: .05 });
 
           // Timeline progress
-          if (t === "experience") {
+          if (t === "experience" || t === "resume") {
             const items2 = newPanel.querySelectorAll<HTMLElement>(".tl-item");
             items2.forEach(i => i.classList.add("in"));
-            const timeline = newPanel.querySelector<HTMLElement>(".timeline");
+            const timeline = newPanel.querySelector<HTMLElement>(".timeline, .resume-timeline");
             if (timeline) setTimeout(() => timeline.style.setProperty("--tl-progress", "100%"), 200);
           }
 
@@ -128,8 +129,9 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
         <IslandStack skills={data.skills} />
         <IslandWork projects={data.projects} />
         <IslandExperience experiences={data.experiences} />
+        <IslandResume data={data} />
         <IslandContact profile={data.profile} />
-        <IslandFooter />
+        <IslandFooter profile={data.profile} />
       </main>
     </div>
   );

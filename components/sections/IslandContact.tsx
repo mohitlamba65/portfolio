@@ -77,6 +77,11 @@ export default function IslandContact({ profile }: IslandContactProps) {
           <a href={linkedin} target="_blank" rel="noreferrer" className="btn btn-ghost">
             Connect on LinkedIn
           </a>
+          {profile.resumeUrl && (
+            <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+              Download resume
+            </a>
+          )}
         </div>
       </div>
 

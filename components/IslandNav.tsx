@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-type Tab = "home" | "about" | "stack" | "work" | "experience" | "contact";
+type Tab = "home" | "about" | "stack" | "work" | "experience" | "resume" | "contact";
 
 interface IslandNavProps {
   activeTab: Tab;
@@ -17,6 +17,7 @@ const NAV_TABS: { id: Tab; label: string }[] = [
   { id: "stack", label: "Stack" },
   { id: "work", label: "Work" },
   { id: "experience", label: "Experience" },
+  { id: "resume", label: "Resume" },
 ];
 
 export default function IslandNav({ activeTab, onTabChange, avatarUrl }: IslandNavProps) {

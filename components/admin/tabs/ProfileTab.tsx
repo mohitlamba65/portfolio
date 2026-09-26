@@ -149,6 +149,14 @@ export default function ProfileTab({ data, onChange }: ProfileTabProps) {
                 mono
               />
             </AdminField>
+            <AdminField label="LeetCode">
+              <AdminInput
+                value={profile.socialLinks?.leetcode || ""}
+                onChange={(e) => updateSocial({ leetcode: e.target.value })}
+                placeholder="https://leetcode.com/u/..."
+                mono
+              />
+            </AdminField>
           </div>
         </AdminFormSection>
 

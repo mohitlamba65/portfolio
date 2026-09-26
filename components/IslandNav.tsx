@@ -12,7 +12,6 @@ interface IslandNavProps {
 }
 
 const NAV_TABS: { id: Tab; label: string }[] = [
-  { id: "home", label: "Home" },
   { id: "about", label: "About" },
   { id: "stack", label: "Stack" },
   { id: "work", label: "Work" },
@@ -59,14 +58,20 @@ export default function IslandNav({ activeTab, onTabChange, avatarUrl }: IslandN
   return (
     <>
       <nav id="island" className={scrolled ? "scrolled" : ""}>
-        {/* Logo */}
-        <div className="island-logo">
+        {/* Logo → home */}
+        <button
+          type="button"
+          className={`island-logo${activeTab === "home" ? " is-home-active" : ""}`}
+          onClick={() => handleTab("home")}
+          aria-label="Go to home"
+          aria-current={activeTab === "home" ? "page" : undefined}
+        >
           {avatarUrl && avatarUrl !== "/default-avatar.svg" ? (
-            <Image src={avatarUrl} alt="ML" fill sizes="34px" className="object-cover" />
+            <Image src={avatarUrl} alt="" fill sizes="34px" className="object-cover" />
           ) : (
             <span>ML</span>
           )}
-        </div>
+        </button>
 
         {/* Tabs */}
         <div className="island-tabs">

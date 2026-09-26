@@ -71,6 +71,7 @@ export interface Profile {
     linkedin: string;
     twitter?: string;
     email: string;
+    leetcode?: string;
   };
 }
 

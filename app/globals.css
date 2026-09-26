@@ -174,6 +174,17 @@ html[data-theme="light"] #island {
   background: var(--bg-elevated); border: 1px solid var(--line);
   font-family: var(--mono); font-size: 12px; color: var(--cyan);
   flex-shrink: 0; overflow: hidden; position: relative;
+  padding: 0; cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+}
+.island-logo:hover { border-color: var(--cyan); }
+.island-logo:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+.island-logo.is-home-active {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--cyan) 35%, transparent);
 }
 
 .island-tabs { display: flex; align-items: center; gap: 2px; min-width: 0; flex-shrink: 1; }
@@ -571,6 +582,18 @@ footer {
   padding: 40px 8vw;
   font-family: var(--mono); font-size: 11px; color: var(--text-faint);
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  align-items: center;
+}
+.footer-socials {
+  display: flex; align-items: center; gap: 14px;
+}
+.footer-socials a {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-faint); transition: color .2s, transform .2s;
+}
+.footer-socials a:hover {
+  color: var(--cyan);
+  transform: translateY(-1px);
 }
 
 /* ========== ADMIN PANEL (portfolio design system) ========== */

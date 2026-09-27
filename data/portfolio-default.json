@@ -4,7 +4,7 @@
     "roleTitle": "ENGINEER / BUILDER",
     "subTitle": "Backend + AI systems",
     "headline": "Mohit Lamba builds backend systems, AI agents, and data pipelines that hold up in production.",
-    "heroTag": "I build the parts of a product most people never see — the pipelines, the agents, the systems that keep running at 3am. Currently obsessed with making AI agents actually reliable in production.",
+    "heroTag": "I build the parts of a product most people never see — the pipelines, the agents, the systems that keep running at 3 am. Currently obsessed with making AI agents actually reliable in production.",
     "availabilityBadge": "AVAILABLE FOR BACKEND · AI ENGINEERING ROLES",
     "location": "Delhi, India",
     "availabilityStatus": "Open for high-scale backend engineering & AI infrastructure roles",
@@ -27,9 +27,9 @@
   },
   "stats": {
     "usersServed": "1M+",
-    "githubContributions": 2770,
-    "totalCommits": 1500,
-    "publicRepos": 56,
+    "githubContributions": 806,
+    "totalCommits": 150,
+    "publicRepos": 22,
     "b2bClients": 50
   },
   "experiences": [

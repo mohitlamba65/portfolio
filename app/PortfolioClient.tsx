@@ -6,8 +6,6 @@ import IslandCursor from "@/components/IslandCursor";
 import StarfieldCanvas from "@/components/StarfieldCanvas";
 import IslandNav from "@/components/IslandNav";
 import IslandHero from "@/components/sections/IslandHero";
-import IslandAbout from "@/components/sections/IslandAbout";
-import IslandStack from "@/components/sections/IslandStack";
 import IslandWork from "@/components/sections/IslandWork";
 import IslandExperience from "@/components/sections/IslandExperience";
 import IslandResume from "@/components/sections/IslandResume";
@@ -15,7 +13,20 @@ import IslandContact from "@/components/sections/IslandContact";
 import IslandFooter from "@/components/sections/IslandFooter";
 import gsap from "gsap";
 
-type Tab = "home" | "about" | "stack" | "work" | "experience" | "resume" | "contact";
+type Tab = "home" | "work" | "experience" | "resume" | "contact";
+
+function normalizeTab(hash: string): Tab | null {
+  if (hash === "about") return "home";
+  if (hash === "stack") return "work";
+  const valid: Tab[] = ["home", "work", "experience", "resume", "contact"];
+  return valid.includes(hash as Tab) ? (hash as Tab) : null;
+}
+
+function scrollWorkToolkit() {
+  requestAnimationFrame(() =>
+    document.getElementById("work-toolkit")?.scrollIntoView({ behavior: "smooth", block: "start" })
+  );
+}
 
 export default function PortfolioClient({ data }: { data: PortfolioData }) {
   const [activeTab, setActiveTab] = useState<Tab>("home");
@@ -23,26 +34,34 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
 
   // Init from URL hash
   useEffect(() => {
-    const hash = window.location.hash.replace("#", "") as Tab;
-    const valid: Tab[] = ["home", "about", "stack", "work", "experience", "resume", "contact"];
-    if (hash && valid.includes(hash)) {
-      // Direct show without animation on first load
+    const hash = window.location.hash.replace("#", "");
+    const tab = normalizeTab(hash);
+    if (tab) {
       document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-      const panel = document.getElementById(hash);
+      const panel = document.getElementById(tab);
       if (panel) {
         panel.classList.add("active");
         gsap.fromTo(panel, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" });
       }
-      currentTabRef.current = hash;
-      setActiveTab(hash);
+      currentTabRef.current = tab;
+      setActiveTab(tab);
+      if (hash === "about") {
+        requestAnimationFrame(() =>
+          document.getElementById("about-on-home")?.scrollIntoView({ behavior: "smooth", block: "start" })
+        );
+      }
+      if (hash === "stack") {
+        scrollWorkToolkit();
+      }
     }
   }, []);
 
   // Popstate
   useEffect(() => {
     const handler = () => {
-      const hash = window.location.hash.replace("#", "") as Tab;
-      if (hash) goToTab(hash, true);
+      const hash = window.location.hash.replace("#", "");
+      const tab = normalizeTab(hash);
+      if (tab) goToTab(tab, true);
     };
     window.addEventListener("popstate", handler);
     return () => window.removeEventListener("popstate", handler);
@@ -65,7 +84,9 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
           gsap.fromTo(newPanel, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" });
 
           // Animate items inside new panel
-          const items = newPanel.querySelectorAll<HTMLElement>(".reveal-item, .principle, .proj-card, .tl-item, .module, .stack-card, .resume-block, .resume-project-card");
+          const items = newPanel.querySelectorAll<HTMLElement>(
+            ".reveal-item, .principle, .proj-card, .tl-item, .module, .work-toolkit-chip, .resume-block, .resume-project-card"
+          );
           gsap.fromTo(items, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, stagger: .05, ease: "power2.out", delay: .05 });
 
           // Timeline progress
@@ -74,6 +95,13 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
             items2.forEach(i => i.classList.add("in"));
             const timeline = newPanel.querySelector<HTMLElement>(".timeline, .resume-timeline");
             if (timeline) setTimeout(() => timeline.style.setProperty("--tl-progress", "100%"), 200);
+          }
+
+          if (t === "home") {
+            newPanel.querySelectorAll<HTMLElement>(".principle, .home-about-block .reveal-item").forEach((item, i) => {
+              item.classList.remove("in");
+              setTimeout(() => item.classList.add("in"), i * 40);
+            });
           }
 
           // Stat counters
@@ -125,9 +153,7 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
 
       <main className="relative z-10">
         <IslandHero data={data} onTabChange={goToTab} />
-        <IslandAbout profile={data.profile} stats={data.stats} />
-        <IslandStack skills={data.skills} />
-        <IslandWork projects={data.projects} />
+        <IslandWork projects={data.projects} skills={data.skills} />
         <IslandExperience experiences={data.experiences} />
         <IslandResume data={data} />
         <IslandContact profile={data.profile} />

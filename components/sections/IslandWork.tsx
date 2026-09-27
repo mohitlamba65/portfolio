@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Project } from "@/types/portfolio";
+import { Project, Skill } from "@/types/portfolio";
+import WorkToolkit from "@/components/sections/WorkToolkit";
 import gsap from "gsap";
 
 interface IslandWorkProps {
   projects: Project[];
+  skills: Skill[];
 }
 
-export default function IslandWork({ projects }: IslandWorkProps) {
+export default function IslandWork({ projects, skills }: IslandWorkProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -16,10 +18,13 @@ export default function IslandWork({ projects }: IslandWorkProps) {
     if (!el) return;
 
     const items = el.querySelectorAll<HTMLElement>(".reveal-item, .proj-card");
-    gsap.fromTo(items, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, stagger: .05, ease: "power2.out", delay: .05 });
+    gsap.fromTo(
+      items,
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: "power2.out", delay: 0.05 }
+    );
 
-    // Animate stat counters
-    el.querySelectorAll<HTMLElement>("[data-count]").forEach(target => {
+    el.querySelectorAll<HTMLElement>(".proj-card [data-count]").forEach((target) => {
       if (target.dataset.done) return;
       target.dataset.done = "1";
       const targetNum = parseInt(target.dataset.count || "0", 10);
@@ -32,13 +37,22 @@ export default function IslandWork({ projects }: IslandWorkProps) {
       const max = 7;
       const id = setInterval(() => {
         ticks++;
-        const rnd = Array.from({ length: digits }).map(() => Math.floor(Math.random() * 10)).join("");
+        const rnd = Array.from({ length: digits })
+          .map(() => Math.floor(Math.random() * 10))
+          .join("");
         target.textContent = rnd + suffix;
         if (ticks >= max) {
           clearInterval(id);
           target.style.opacity = "1";
           const obj = { v: 0 };
-          gsap.to(obj, { v: targetNum, duration: 0.9, ease: "power2.out", onUpdate: () => { target.textContent = Math.floor(obj.v) + suffix; } });
+          gsap.to(obj, {
+            v: targetNum,
+            duration: 0.9,
+            ease: "power2.out",
+            onUpdate: () => {
+              target.textContent = Math.floor(obj.v) + suffix;
+            },
+          });
         }
       }, 45);
     });
@@ -47,8 +61,15 @@ export default function IslandWork({ projects }: IslandWorkProps) {
   return (
     <div ref={sectionRef} className="tab-panel" id="work" data-panel>
       <div className="panel-inner">
-        <div className="kicker">WORK</div>
+        <div className="kicker">PROJECTS</div>
         <h2 className="h2 reveal-item">Things I&apos;ve built and run.</h2>
+        <p className="reveal-item work-intro">
+          Production systems first — with the stack that keeps them running.
+        </p>
+
+        <WorkToolkit skills={skills} />
+
+        <div className="work-projects-divider reveal-item" aria-hidden />
 
         <div className="proj-list">
           {projects.map((proj, i) => {
@@ -56,10 +77,9 @@ export default function IslandWork({ projects }: IslandWorkProps) {
               proj.status === "private"
                 ? "proj-status private"
                 : proj.status === "building"
-                ? "proj-status building"
-                : "proj-status";
+                  ? "proj-status building"
+                  : "proj-status";
 
-            // Parse hero stat for data-count
             let countVal = 0;
             let countSuffix = "";
             if (proj.heroStat) {
@@ -80,7 +100,8 @@ export default function IslandWork({ projects }: IslandWorkProps) {
                   </div>
                   <div className={statusClass}>
                     <span className="dotlive"></span>
-                    {proj.statusLabel || (proj.status === "live" ? "LIVE" : proj.status === "building" ? "BUILDING" : "PRIVATE")}
+                    {proj.statusLabel ||
+                      (proj.status === "live" ? "LIVE" : proj.status === "building" ? "BUILDING" : "PRIVATE")}
                   </div>
                 </div>
 
@@ -90,8 +111,10 @@ export default function IslandWork({ projects }: IslandWorkProps) {
 
                 {proj.techStack?.length > 0 && (
                   <div className="proj-tags">
-                    {proj.techStack.map(t => (
-                      <span key={t} className="tag">{t}</span>
+                    {proj.techStack.map((t) => (
+                      <span key={t} className="tag">
+                        {t}
+                      </span>
                     ))}
                   </div>
                 )}
@@ -99,16 +122,14 @@ export default function IslandWork({ projects }: IslandWorkProps) {
                 <div className="proj-bottom">
                   {proj.heroStat ? (
                     <div className="proj-herostat">
-                      <div
-                        className="n stat-num"
-                        data-count={countVal}
-                        data-suffix={countSuffix}
-                      >
+                      <div className="n stat-num" data-count={countVal} data-suffix={countSuffix}>
                         0
                       </div>
                       <div className="l">{proj.heroStat.label}</div>
                     </div>
-                  ) : <div />}
+                  ) : (
+                    <div />
+                  )}
 
                   {proj.githubUrl ? (
                     <a href={proj.githubUrl} target="_blank" rel="noreferrer" className="proj-link">

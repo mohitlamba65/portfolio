@@ -2,6 +2,7 @@ import { getNavbarAvatarIcon } from "@/lib/site-icon";
 
 export const dynamic = "force-dynamic";
 export const size = { width: 32, height: 32 };
+export const contentType = "image/jpeg";
 
 export default async function Icon() {
   const { body, contentType } = await getNavbarAvatarIcon();

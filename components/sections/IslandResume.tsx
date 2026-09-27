@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { PortfolioData } from "@/types/portfolio";
+import { RESUME_VIEWER_PATH } from "@/lib/resume-viewer";
 import { highlightText, getResumeHighlightPhrases } from "@/lib/resume-highlight";
 import gsap from "gsap";
 
@@ -30,6 +31,7 @@ export default function IslandResume({ data }: IslandResumeProps) {
   const [activeSection, setActiveSection] = useState<string>("resume-summary");
 
   const resumeUrl = profile.resumeUrl || "/resume.pdf";
+  const resumeOpenUrl = RESUME_VIEWER_PATH;
   const highlights = getResumeHighlightPhrases(skills, stats);
   const featuredProjects = projects.filter((p) => p.featured).slice(0, 3);
   const displayProjects = featuredProjects.length > 0 ? featuredProjects : projects.slice(0, 3);
@@ -99,15 +101,12 @@ export default function IslandResume({ data }: IslandResumeProps) {
           </div>
           <div className="resume-header-actions">
             <a
-              href={resumeUrl}
+              href={resumeOpenUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-primary"
             >
-              Download PDF
-            </a>
-            <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-              Open in tab
+              View resume PDF
             </a>
           </div>
         </div>
@@ -120,7 +119,7 @@ export default function IslandResume({ data }: IslandResumeProps) {
             AI & agentic systems
           </span>
           <span className="trait" style={{ "--tc": "var(--blue)" } as React.CSSProperties}>
-            {stats.githubContributions?.toLocaleString() || "2,770"} GitHub contributions
+            {stats.githubContributions?.toLocaleString() || "806"} GitHub contributions
           </span>
           <span className="trait" style={{ "--tc": "var(--violet)" } as React.CSSProperties}>
             Production reliability
@@ -241,10 +240,10 @@ export default function IslandResume({ data }: IslandResumeProps) {
 
           <div className="resume-download-strip reveal-item">
             <p style={{ color: "var(--text-dim)", fontSize: 14 }}>
-              Prefer the official document? Download the full PDF resume.
+              Prefer the official document? Open the full PDF in a new tab — you can save it from there if needed.
             </p>
-            <a href={resumeUrl} download className="btn btn-primary">
-              Download resume.pdf
+            <a href={resumeOpenUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              View resume PDF
             </a>
           </div>
         </div>

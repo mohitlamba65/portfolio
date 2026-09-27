@@ -332,6 +332,13 @@ html[data-theme="light"] .btn-primary { color: #fff; }
 .modules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 20px; }
 @media (max-width: 800px) { .modules { grid-template-columns: repeat(2, 1fr); } }
 
+.home-about-block {
+  margin-top: 72px;
+  padding-top: 48px;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 120px;
+}
+
 .module {
   border: 1px solid var(--line); border-radius: var(--radius);
   padding: 20px; background: var(--bg-panel);
@@ -474,6 +481,119 @@ html[data-theme="light"] .filter-btn.active { color: #fff; }
 .signal-legend { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
 .signal-item { display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
 .signal-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+/* ========== WORK TOOLKIT (compact stack on work tab) ========== */
+.work-intro {
+  color: var(--text-dim);
+  max-width: 56ch;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+.work-toolkit {
+  margin-top: 28px;
+  margin-bottom: 8px;
+  scroll-margin-top: 120px;
+}
+.work-toolkit-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px 20px;
+  margin-bottom: 16px;
+}
+.work-toolkit-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin: 0;
+}
+.work-toolkit-sub {
+  font-size: 13px;
+  color: var(--text-faint);
+  margin: 0;
+}
+.work-toolkit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 8px;
+}
+.work-toolkit-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-panel);
+  min-width: 0;
+  transition: border-color 0.2s;
+}
+.work-toolkit-chip:hover {
+  border-color: var(--cat-color, var(--cyan));
+}
+.work-toolkit-icon-box {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--cat-color, var(--cyan)) 8%, var(--bg-panel));
+  color: var(--cat-color, var(--text-dim));
+}
+.work-toolkit-icon-img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+  opacity: 0.92;
+}
+html[data-theme="light"] .work-toolkit-icon-img {
+  opacity: 0.85;
+}
+.work-toolkit-icon-glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cat-color, var(--text-dim));
+}
+.work-toolkit-icon-glyph .skill-glyph {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.work-toolkit-name {
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.work-toolkit-toggle {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 0;
+  transition: color 0.2s;
+}
+.work-toolkit-toggle:hover {
+  color: var(--cyan);
+}
+.work-projects-divider {
+  margin: 40px 0 32px;
+  border-top: 1px solid var(--line);
+}
 
 /* ========== WORK / PROJECTS PANEL ========== */
 .proj-list { display: flex; flex-direction: column; gap: 20px; }
@@ -1334,4 +1454,17 @@ html[data-theme="light"] .resume-section-nav-btn.active { color: #fff; }
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* Resume PDF viewer (site chrome + favicon, PDF in iframe) */
+.resume-doc-view {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+}
+.resume-doc-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }

@@ -2,6 +2,7 @@ import { getNavbarAvatarIcon } from "@/lib/site-icon";
 
 export const dynamic = "force-dynamic";
 export const size = { width: 180, height: 180 };
+export const contentType = "image/jpeg";
 
 export default async function AppleIcon() {
   const { body, contentType } = await getNavbarAvatarIcon();

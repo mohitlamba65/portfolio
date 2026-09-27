@@ -43,9 +43,9 @@ export interface Project {
 
 export interface SystemStats {
   usersServed: string;            // e.g. "1M+"
-  githubContributions: number;    // e.g. 2770
-  totalCommits: number;           // e.g. 1500
-  publicRepos: number;            // e.g. 56
+  githubContributions: number;    // e.g. 806 (last 12 months)
+  totalCommits: number;           // e.g. 150 (last year, display may add +)
+  publicRepos: number;            // e.g. 22
   b2bClients?: number;            // e.g. 50
   // Legacy fields kept for backwards compat
   publicActivitySignal?: number;

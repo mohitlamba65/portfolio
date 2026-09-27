@@ -35,7 +35,7 @@ export default function StatsTab({ data, onChange }: StatsTabProps) {
         <div className="grid grid-cols-2 gap-4 p-4 rounded-lg border admin-border bg-[var(--bg-panel-2)] mb-6">
           <div>
             <div className="text-2xl font-semibold font-[family-name:var(--mono)] admin-accent">
-              {(stats.githubContributions ?? 2770).toLocaleString()}
+              {(stats.githubContributions ?? 806).toLocaleString()}
             </div>
             <div className="admin-hint !mt-1">GitHub contributions</div>
           </div>
@@ -53,7 +53,7 @@ export default function StatsTab({ data, onChange }: StatsTabProps) {
           </div>
           <div>
             <div className="text-2xl font-semibold font-[family-name:var(--mono)] text-[var(--pink)]">
-              {(stats.publicRepos ?? 56).toLocaleString()}
+              {(stats.publicRepos ?? 22).toLocaleString()}
             </div>
             <div className="admin-hint !mt-1">Public repos</div>
           </div>
@@ -61,20 +61,20 @@ export default function StatsTab({ data, onChange }: StatsTabProps) {
 
         <AdminFormSection title="Edit values">
           <div className="admin-form-grid two-col">
-            <AdminField label="GitHub contributions">
+            <AdminField label="GitHub contributions" hint="Last 12 months on your profile">
               <AdminInput
                 type="number"
-                value={stats.githubContributions ?? 2770}
+                value={stats.githubContributions ?? 806}
                 onChange={(e) =>
                   updateStats({ githubContributions: Number(e.target.value) })
                 }
                 mono
               />
             </AdminField>
-            <AdminField label="Total commits">
+            <AdminField label="Commits (last year)" hint="Shown with + suffix on site">
               <AdminInput
                 type="number"
-                value={stats.totalCommits ?? 1500}
+                value={stats.totalCommits ?? 150}
                 onChange={(e) => updateStats({ totalCommits: Number(e.target.value) })}
                 mono
               />
@@ -82,7 +82,7 @@ export default function StatsTab({ data, onChange }: StatsTabProps) {
             <AdminField label="Public repositories">
               <AdminInput
                 type="number"
-                value={stats.publicRepos ?? 56}
+                value={stats.publicRepos ?? 22}
                 onChange={(e) => updateStats({ publicRepos: Number(e.target.value) })}
                 mono
               />

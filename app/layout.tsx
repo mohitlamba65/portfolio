@@ -14,11 +14,19 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await PortfolioService.getPortfolio();
+  const avatarUrl = data.profile.navbarAvatarUrl || "/default-avatar.svg";
+  const iconType = avatarUrl.endsWith(".svg") ? "image/svg+xml" : "image/jpeg";
+
   return {
     title: `${data.profile.name} — Backend & AI Systems Engineer`,
     description: data.profile.headline || `${data.profile.name} builds backend systems, AI agents, and data pipelines that hold up in production.`,
     keywords: ["Backend Engineer", "AI Systems", "Distributed Systems", "Node.js", "LangGraph"],
     authors: [{ name: data.profile.name }],
+    icons: {
+      icon: [{ url: "/icon", type: iconType, sizes: "32x32" }],
+      apple: [{ url: "/apple-icon", type: iconType, sizes: "180x180" }],
+      shortcut: ["/icon"],
+    },
   };
 }
 

@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Profile } from "@/types/portfolio";
+import { RESUME_VIEWER_PATH } from "@/lib/resume-viewer";
+import { buildHireMeMailto, FileDocumentIcon, LinkedInIcon, MailIcon } from "@/components/ui/contact-icons";
 
 interface IslandContactProps {
   profile: Profile;
@@ -9,10 +11,10 @@ interface IslandContactProps {
 
 export default function IslandContact({ profile }: IslandContactProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [toastVisible, setToastVisible] = useState(false);
 
   const email = profile.socialLinks?.email || "mohitlamba043@gmail.com";
   const linkedin = profile.socialLinks?.linkedin || "https://www.linkedin.com/in/mohit-lamba-b39a3b35a";
+  const hireMailto = buildHireMeMailto(email, profile.name);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -21,13 +23,6 @@ export default function IslandContact({ profile }: IslandContactProps) {
       setTimeout(() => item.classList.add("in"), i * 80);
     });
   }, []);
-
-  const copyEmail = () => {
-    navigator.clipboard.writeText(email).then(() => {
-      setToastVisible(true);
-      setTimeout(() => setToastVisible(false), 2200);
-    });
-  };
 
   return (
     <div ref={sectionRef} className="tab-panel" id="contact" data-panel>
@@ -42,7 +37,6 @@ export default function IslandContact({ profile }: IslandContactProps) {
           to hold up under real load, I&apos;d like to hear about it.
         </p>
 
-        {/* Terminal */}
         <div className="terminal reveal-item">
           <div className="term-bar">
             <span />
@@ -69,25 +63,22 @@ export default function IslandContact({ profile }: IslandContactProps) {
           </div>
         </div>
 
-        {/* Actions */}
         <div className="contact-actions reveal-item">
-          <button className="btn btn-primary" onClick={copyEmail}>
-            Copy email address
-          </button>
-          <a href={linkedin} target="_blank" rel="noreferrer" className="btn btn-ghost">
-            Connect on LinkedIn
+          <a href={hireMailto} className="btn btn-primary">
+            <MailIcon />
+            Hire me
+          </a>
+          <a href={linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+            <LinkedInIcon />
+            LinkedIn
           </a>
           {profile.resumeUrl && (
-            <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-              Download resume
+            <a href={RESUME_VIEWER_PATH} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+              <FileDocumentIcon />
+              View resume
             </a>
           )}
         </div>
-      </div>
-
-      {/* Toast */}
-      <div id="toast" className={toastVisible ? "show" : ""}>
-        Email copied to clipboard
       </div>
     </div>
   );

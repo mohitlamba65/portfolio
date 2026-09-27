@@ -147,7 +147,7 @@ export function IslandAboutContent({ profile, stats }: IslandAboutContentProps) 
               </span>
             </div>
             <div className="stat-row">
-              <span className="stat-label">GITHUB CONTRIBUTIONS</span>
+              <span className="stat-label">TOTAL GITHUB CONTRIBUTIONS</span>
               <span className="stat-num" data-count={stats.githubContributions ?? 806} data-suffix="">
                 0
               </span>

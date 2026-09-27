@@ -50,6 +50,9 @@ export default function IslandExperience({ experiences }: IslandExperienceProps)
                   {exp.period ? ` · ${exp.period.toUpperCase()}` : ""}
                 </div>
                 <h4>{exp.role}</h4>
+                {exp.highlightMetric ? (
+                  <p className="tl-metric">{exp.highlightMetric}</p>
+                ) : null}
                 <p>{exp.description}</p>
 
                 {hasMore && (

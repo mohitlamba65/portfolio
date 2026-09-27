@@ -8,17 +8,18 @@ import IslandNav from "@/components/IslandNav";
 import IslandHero from "@/components/sections/IslandHero";
 import IslandWork from "@/components/sections/IslandWork";
 import IslandExperience from "@/components/sections/IslandExperience";
-import IslandResume from "@/components/sections/IslandResume";
 import IslandContact from "@/components/sections/IslandContact";
+import { RESUME_VIEWER_PATH } from "@/lib/resume-viewer";
 import IslandFooter from "@/components/sections/IslandFooter";
 import gsap from "gsap";
 
-type Tab = "home" | "work" | "experience" | "resume" | "contact";
+type Tab = "home" | "work" | "experience" | "contact";
 
 function normalizeTab(hash: string): Tab | null {
   if (hash === "about") return "home";
   if (hash === "stack") return "work";
-  const valid: Tab[] = ["home", "work", "experience", "resume", "contact"];
+  if (hash === "resume") return null;
+  const valid: Tab[] = ["home", "work", "experience", "contact"];
   return valid.includes(hash as Tab) ? (hash as Tab) : null;
 }
 
@@ -35,6 +36,11 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
   // Init from URL hash
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
+    if (hash === "resume") {
+      window.open(RESUME_VIEWER_PATH, "_blank", "noopener,noreferrer");
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+      return;
+    }
     const tab = normalizeTab(hash);
     if (tab) {
       document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
@@ -85,15 +91,15 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
 
           // Animate items inside new panel
           const items = newPanel.querySelectorAll<HTMLElement>(
-            ".reveal-item, .principle, .proj-card, .tl-item, .module, .work-toolkit-chip, .resume-block, .resume-project-card"
+            ".reveal-item, .principle, .proj-card, .tl-item, .module, .work-toolkit-chip"
           );
           gsap.fromTo(items, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, stagger: .05, ease: "power2.out", delay: .05 });
 
           // Timeline progress
-          if (t === "experience" || t === "resume") {
+          if (t === "experience") {
             const items2 = newPanel.querySelectorAll<HTMLElement>(".tl-item");
             items2.forEach(i => i.classList.add("in"));
-            const timeline = newPanel.querySelector<HTMLElement>(".timeline, .resume-timeline");
+            const timeline = newPanel.querySelector<HTMLElement>(".timeline");
             if (timeline) setTimeout(() => timeline.style.setProperty("--tl-progress", "100%"), 200);
           }
 
@@ -155,7 +161,6 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
         <IslandHero data={data} onTabChange={goToTab} />
         <IslandWork projects={data.projects} skills={data.skills} />
         <IslandExperience experiences={data.experiences} />
-        <IslandResume data={data} />
         <IslandContact profile={data.profile} />
         <IslandFooter profile={data.profile} />
       </main>

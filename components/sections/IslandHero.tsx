@@ -93,8 +93,14 @@ export default function IslandHero({ data, onTabChange }: IslandHeroProps) {
   const modules = [
     { id: "work", num: "01", title: "Projects", desc: "Stack highlights and shipped systems." },
     { id: "experience", num: "02", title: "Experience", desc: "How I got here." },
-    { id: "resume", num: "03", title: "Resume", desc: "Career story and PDF." },
-  ];
+    {
+      id: "resume",
+      num: "03",
+      title: "Resume",
+      desc: "Open PDF in a new tab.",
+      external: RESUME_VIEWER_PATH,
+    },
+  ] as const;
 
   const scrollToAbout = () => {
     document.getElementById("about-on-home")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -126,17 +132,10 @@ export default function IslandHero({ data, onTabChange }: IslandHeroProps) {
               <ShippedIcon />
               See what I&apos;ve shipped
             </button>
-            {profile.resumeUrl ? (
-              <a href={RESUME_VIEWER_PATH} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-                <FileDocumentIcon />
-                View resume
-              </a>
-            ) : (
-              <button className="btn btn-ghost" onClick={() => onTabChange("resume")}>
-                <FileDocumentIcon />
-                View resume
-              </button>
-            )}
+            <a href={RESUME_VIEWER_PATH} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+              <FileDocumentIcon />
+              View resume
+            </a>
             <button className="btn btn-ghost" onClick={() => onTabChange("contact")}>
               <ContactIcon />
               Get in touch
@@ -148,7 +147,7 @@ export default function IslandHero({ data, onTabChange }: IslandHeroProps) {
               <div className="num" data-count={stats.githubContributions ?? 806} data-suffix="">
                 0
               </div>
-              <div className="lbl">CONTRIBUTIONS</div>
+              <div className="lbl">TOTAL CONTRIBUTIONS</div>
             </div>
             <div className="dash-stat">
               <div className="num" data-count={stats.totalCommits ?? 150} data-suffix="+">
@@ -177,7 +176,15 @@ export default function IslandHero({ data, onTabChange }: IslandHeroProps) {
               <p>Scroll to who I am and how I work.</p>
             </div>
             {modules.map((m) => (
-              <div key={m.id} className="module" onClick={() => onTabChange(m.id)}>
+              <div
+                key={m.id}
+                className="module"
+                onClick={() =>
+                  "external" in m && m.external
+                    ? window.open(m.external, "_blank", "noopener,noreferrer")
+                    : onTabChange(m.id)
+                }
+              >
                 <div className="mnum">{m.num}</div>
                 <h4>{m.title}</h4>
                 <p>{m.desc}</p>

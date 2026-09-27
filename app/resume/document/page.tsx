@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export default async function ResumeDocumentPage() {
   const data = await PortfolioService.getPortfolio();
   const url = data.profile.resumeUrl;
-  if (!url) redirect("/#resume");
+  if (!url) redirect("/");
 
   return (
     <div className="resume-doc-view">

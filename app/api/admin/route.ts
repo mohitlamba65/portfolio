@@ -42,6 +42,15 @@ export async function POST(req: NextRequest) {
       case "reset_defaults":
         updated = await PortfolioService.resetToDefault();
         break;
+      case "github_sync_refresh":
+        try {
+          updated = await PortfolioService.refreshGithubStats();
+        } catch (error) {
+          const message = error instanceof Error ? error.message : "GitHub sync failed";
+          const data = await PortfolioService.getPortfolioForAdmin();
+          return NextResponse.json({ error: message, data }, { status: 502 });
+        }
+        break;
       default:
         return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }

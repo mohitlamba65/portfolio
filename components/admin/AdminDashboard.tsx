@@ -550,7 +550,17 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
             {activeTab === "experience" && <ExperienceTab data={data} onChange={setData} />}
             {activeTab === "projects" && <ProjectsTab data={data} onChange={setData} />}
             {activeTab === "skills" && <SkillsTab data={data} onChange={setData} />}
-            {activeTab === "stats" && <StatsTab data={data} onChange={setData} />}
+            {activeTab === "stats" && (
+              <StatsTab
+                data={data}
+                onChange={setData}
+                adminKey={passcode}
+                onDataReplace={(next) => {
+                  setData(next);
+                  setInitialJson(JSON.stringify(next));
+                }}
+              />
+            )}
             {activeTab === "photos" && (
               <PhotosTab
                 data={data}

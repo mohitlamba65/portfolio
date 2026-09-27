@@ -38,15 +38,40 @@ export interface Project {
   techStack: string[];
   liveUrl?: string;
   githubUrl?: string;
+  coverImageUrl?: string;
   featured?: boolean;
+}
+
+export interface GithubStatsOverrides {
+  githubContributions?: boolean;
+  publicRepos?: boolean;
+  totalCommits?: boolean;
+}
+
+export interface GithubLiveSnapshot {
+  githubContributions: number;
+  totalCommitsLastYear: number;
+  publicRepos: number;
+  fetchedAt: string;
+}
+
+export interface GithubStatsConfig {
+  syncEnabled?: boolean;
+  username?: string;
+  excludeForks?: boolean;
+  lastSyncedAt?: string;
+  lastSyncError?: string;
+  liveSnapshot?: GithubLiveSnapshot;
+  overrides?: GithubStatsOverrides;
 }
 
 export interface SystemStats {
   usersServed: string;            // e.g. "1M+"
-  githubContributions: number;    // e.g. 806 (last 12 months)
+  githubContributions: number;    // e.g. 806 (all-time when GitHub sync is on)
   totalCommits: number;           // e.g. 150 (last year, display may add +)
   publicRepos: number;            // e.g. 22
   b2bClients?: number;            // e.g. 50
+  github?: GithubStatsConfig;
   // Legacy fields kept for backwards compat
   publicActivitySignal?: number;
   uptimeSla?: string;

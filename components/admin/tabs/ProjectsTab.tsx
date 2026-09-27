@@ -163,11 +163,19 @@ export default function ProjectsTab({ data, onChange }: ProjectsTabProps) {
                       mono
                     />
                   </AdminField>
-                  <AdminField label="Live demo URL" hint="Optional">
+                  <AdminField label="Live demo URL" hint="Shown as Visit on the card">
                     <AdminInput
                       value={selected.liveUrl || ""}
                       onChange={(e) => handleUpdate(selected.id, { liveUrl: e.target.value })}
                       placeholder="https://..."
+                      mono
+                    />
+                  </AdminField>
+                  <AdminField label="Cover image URL" hint="e.g. /projects/tooltap.png">
+                    <AdminInput
+                      value={selected.coverImageUrl || ""}
+                      onChange={(e) => handleUpdate(selected.id, { coverImageUrl: e.target.value })}
+                      placeholder="/projects/my-app.png"
                       mono
                     />
                   </AdminField>

@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { RESUME_VIEWER_PATH } from "@/lib/resume-viewer";
 
-type Tab = "home" | "work" | "experience" | "resume" | "contact";
+type Tab = "home" | "work" | "experience" | "contact";
 
 interface IslandNavProps {
   activeTab: Tab;
@@ -14,8 +15,11 @@ interface IslandNavProps {
 const NAV_TABS: { id: Tab; label: string }[] = [
   { id: "work", label: "Projects" },
   { id: "experience", label: "Experience" },
-  { id: "resume", label: "Resume" },
 ];
+
+function openResumeViewer() {
+  window.open(RESUME_VIEWER_PATH, "_blank", "noopener,noreferrer");
+}
 
 export default function IslandNav({ activeTab, onTabChange, avatarUrl }: IslandNavProps) {
   const [scrolled, setScrolled] = useState(false);
@@ -82,6 +86,9 @@ export default function IslandNav({ activeTab, onTabChange, avatarUrl }: IslandN
               {t.label}
             </button>
           ))}
+          <button type="button" className="island-tab" onClick={() => openResumeViewer()}>
+            Resume
+          </button>
         </div>
 
         {/* CTA */}
@@ -119,7 +126,7 @@ export default function IslandNav({ activeTab, onTabChange, avatarUrl }: IslandN
 
       {/* Mobile menu */}
       <div id="mobile-menu" className={mobileOpen ? "open" : ""}>
-        {[...NAV_TABS, { id: "contact" as Tab, label: "Contact" }].map((t) => (
+        {NAV_TABS.map((t) => (
           <button
             key={t.id}
             className={activeTab === t.id ? "active" : ""}
@@ -128,6 +135,15 @@ export default function IslandNav({ activeTab, onTabChange, avatarUrl }: IslandN
             {t.label}
           </button>
         ))}
+        <button type="button" onClick={() => { openResumeViewer(); setMobileOpen(false); }}>
+          Resume
+        </button>
+        <button
+          className={activeTab === "contact" ? "active" : ""}
+          onClick={() => handleTab("contact")}
+        >
+          Contact
+        </button>
       </div>
     </>
   );

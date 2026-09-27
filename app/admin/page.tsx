@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function AdminPage() {
-  const data = await PortfolioService.getPortfolio();
+  const data = await PortfolioService.getPortfolioForAdmin();
 
   return <AdminDashboard initialData={data} />;
 }

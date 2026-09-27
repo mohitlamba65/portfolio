@@ -30,7 +30,17 @@
     "githubContributions": 806,
     "totalCommits": 150,
     "publicRepos": 22,
-    "b2bClients": 50
+    "b2bClients": 50,
+    "github": {
+      "syncEnabled": true,
+      "username": "mohitlamba65",
+      "excludeForks": true,
+      "overrides": {
+        "githubContributions": false,
+        "publicRepos": false,
+        "totalCommits": false
+      }
+    }
   },
   "experiences": [
     {
@@ -38,8 +48,13 @@
       "company": "Mednex",
       "role": "AI & Backend Systems",
       "period": "Current",
-      "description": "Helped build an autonomous GTM AI platform — agent orchestration, RAG, and the backend infrastructure that keeps it running for 50+ B2B clients.",
-      "bullets": [],
+      "highlightMetric": "50+ B2B clients on the GTM platform",
+      "description": "Helped build an autonomous GTM AI platform in production — coordinated agents for ICP generation, list building, market research, and personalized outreach, not a single-prompt wrapper.",
+      "bullets": [
+        "Agent orchestration with LangGraph and RAG over business context",
+        "Backend pipelines integrating external data providers and campaign workflows",
+        "Production system running campaigns for 50+ B2B clients (proprietary — architecture walkthroughs on request)"
+      ],
       "techStack": ["Node.js", "TypeScript", "LangGraph", "LangChain", "RAG", "PostgreSQL"]
     },
     {
@@ -67,24 +82,26 @@
       "title": "ToolTap",
       "eyebrow": "WHATSAPP -> LLM AGENT -> TOOLS -> WHATSAPP",
       "provenance": "Built and maintained solo",
-      "description": "A backend-first AI agent that turns WhatsApp into a full tool-calling interface. The interesting part isn't the chat UI — it's the orchestration underneath: async webhook processing, tool-calling loops, and graceful failure when the LLM or a tool times out mid-conversation.",
+      "description": "A backend-first AI agent that turns WhatsApp into a full tool-calling interface. Async webhook processing, tool-calling loops, and graceful failure when the LLM or a tool times out mid-conversation.",
       "status": "live",
-      "statusLabel": "LIVE ON GITHUB",
-      "heroStat": { "value": "100%", "label": "async, webhook-driven" },
+      "statusLabel": "LIVE",
       "techStack": ["LangChain", "LangGraph", "Node.js", "WhatsApp Cloud API", "Webhooks"],
+      "liveUrl": "https://tool-tap.vercel.app/",
       "githubUrl": "https://github.com/mohitlamba65/ToolTap",
+      "coverImageUrl": "/projects/tooltap.png",
       "featured": true
     },
     {
-      "id": "proj-gtm",
-      "title": "Autonomous GTM AI Platform",
-      "eyebrow": "ICP GENERATION -> RESEARCH -> PERSONALIZED OUTREACH",
-      "provenance": "Backend + AI layer, at Mednex",
-      "description": "AI-driven go-to-market workflows — ICP generation, list building, market research, and personalized copywriting, running as coordinated agents rather than a single prompt. I worked across both the AI layer and the backend feeding it: agent orchestration, external data providers, and business-context processing.",
-      "status": "private",
-      "statusLabel": "PRODUCTION . PROPRIETARY",
-      "heroStat": { "value": "50+", "label": "B2B clients running campaigns" },
-      "techStack": ["AI Agents", "LangGraph", "Node.js", "PostgreSQL", "RAG"],
+      "id": "proj-warmtalk",
+      "title": "WarmTalk",
+      "eyebrow": "MATCH -> MESSAGING -> VIDEO CARE",
+      "provenance": "Personal project · built solo",
+      "description": "A full-stack mental health platform with Next.js, Node.js, and PostgreSQL. Real-time secure messaging (Socket.io), inclusive therapist matching, and integrated video consultations.",
+      "status": "live",
+      "statusLabel": "LIVE",
+      "techStack": ["Next.js", "Node.js", "PostgreSQL", "Socket.io", "TypeScript"],
+      "liveUrl": "https://warmtalk.vercel.app/",
+      "coverImageUrl": "/projects/warmtalk.png",
       "featured": true
     },
     {

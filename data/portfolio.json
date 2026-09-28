@@ -48,6 +48,7 @@
       "company": "Mednex",
       "role": "AI & Backend Systems",
       "period": "Current",
+      "location": "Remote · India",
       "highlightMetric": "50+ B2B clients on the GTM platform",
       "description": "Helped build an autonomous GTM AI platform in production — coordinated agents for ICP generation, list building, market research, and personalized outreach, not a single-prompt wrapper.",
       "bullets": [
@@ -67,10 +68,15 @@
     {
       "id": "exp-ey",
       "company": "EY",
-      "role": "Built an EPFO WhatsApp engagement platform — 1M+ active campaign users",
+      "role": "Backend Engineer · EPFO WhatsApp engagement platform",
       "period": "Previous",
-      "description": "Owned backend systems for a high-traffic messaging product — APIs, webhooks, Redis Streams, async processing. The project that shaped how I think about reliability under real load.",
-      "bullets": [],
+      "location": "Delhi, India",
+      "description": "Owned backend systems for a high-traffic messaging product — APIs, webhooks, Redis Streams, and async processing at 1M+ active campaign users.",
+      "bullets": [
+        "Webhook-driven WhatsApp Cloud API flows with idempotent handlers and retry-safe queues",
+        "Redis Streams and RabbitMQ for async campaign delivery and back-pressure under peak load",
+        "PostgreSQL-backed services designed for reliability — the role that shaped how I think about production load"
+      ],
       "techStack": [
         "Node.js",
         "TypeScript",
@@ -85,6 +91,7 @@
       "company": "Foundations",
       "role": "Full-stack development, then a pull toward backend + AI",
       "period": "Earlier",
+      "location": "India",
       "description": "Started across the stack, kept gravitating toward the systems layer — the parts users never see but always feel.",
       "bullets": [],
       "techStack": []

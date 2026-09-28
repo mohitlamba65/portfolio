@@ -91,7 +91,7 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
 
           // Animate items inside new panel
           const items = newPanel.querySelectorAll<HTMLElement>(
-            ".reveal-item, .principle, .proj-card, .tl-item, .module, .work-toolkit-chip"
+            ".reveal-item, .principle, .proj-card, .exp-card, .tl-item, .module, .work-toolkit-chip"
           );
           gsap.fromTo(items, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, stagger: .05, ease: "power2.out", delay: .05 });
 
@@ -160,7 +160,11 @@ export default function PortfolioClient({ data }: { data: PortfolioData }) {
       <main className="relative z-10">
         <IslandHero data={data} onTabChange={goToTab} />
         <IslandWork projects={data.projects} skills={data.skills} />
-        <IslandExperience experiences={data.experiences} />
+        <IslandExperience
+          experiences={data.experiences}
+          skills={data.skills}
+          defaultLocation={data.profile.location}
+        />
         <IslandContact profile={data.profile} />
         <IslandFooter profile={data.profile} />
       </main>

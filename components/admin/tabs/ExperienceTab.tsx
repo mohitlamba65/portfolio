@@ -119,7 +119,7 @@ export default function ExperienceTab({ data, onChange }: ExperienceTabProps) {
               <div className="flex items-start justify-between gap-4 mb-5 pb-4 border-b admin-border">
                 <div>
                   <h3 className="text-base font-semibold">Edit experience</h3>
-                  <p className="admin-hint mt-0.5">Shown on the Experience timeline after you save.</p>
+                  <p className="admin-hint mt-0.5">Shown as experience cards on the site after you save.</p>
                 </div>
                 <button
                   type="button"
@@ -221,7 +221,7 @@ export default function ExperienceTab({ data, onChange }: ExperienceTabProps) {
                       </div>
                     ))}
                     {(selected.bullets || []).length === 0 ? (
-                      <p className="admin-hint">No bullets yet. These expand on the timeline.</p>
+                      <p className="admin-hint">Impact bullets — shown on the experience card.</p>
                     ) : null}
                   </div>
                 </div>

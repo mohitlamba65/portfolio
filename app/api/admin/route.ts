@@ -1,23 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PortfolioService } from "@/services/portfolio-service";
-
-const ADMIN_PASSCODE = process.env.ADMIN_PASSWORD || "admin123";
-
-function isAuthorized(req: NextRequest): boolean {
-  const authHeader = req.headers.get("x-admin-key") || req.headers.get("authorization");
-  if (!authHeader) return false;
-  const token = authHeader.replace("Bearer ", "").trim();
-  return token === ADMIN_PASSCODE;
-}
+import { isAdminPasswordConfigured, isAuthorizedAdminRequest } from "@/lib/admin-auth";
 
 export async function POST(req: NextRequest) {
-  if (!isAuthorized(req)) {
+  if (!isAdminPasswordConfigured()) {
+    return NextResponse.json({ error: "Admin access is not configured." }, { status: 503 });
+  }
+
+  if (!isAuthorizedAdminRequest(req)) {
     return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
   }
 
   try {
     const body = await req.json();
     const { action, payload } = body;
+
+    if (action === "verify") {
+      return NextResponse.json({ success: true });
+    }
 
     let updated;
     switch (action) {

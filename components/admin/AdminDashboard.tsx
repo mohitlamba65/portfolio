@@ -134,16 +134,46 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
 
   const hasUnsavedChanges = JSON.stringify(data) !== initialJson;
 
+  const verifyAdminPasscode = useCallback(async (key: string): Promise<{ ok: boolean; message?: string }> => {
+    const trimmed = key.trim();
+    if (!trimmed) {
+      return { ok: false, message: "Please enter your admin passcode." };
+    }
+    try {
+      const res = await fetch("/api/admin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-key": trimmed,
+        },
+        body: JSON.stringify({ action: "verify" }),
+      });
+      if (res.ok) return { ok: true };
+      if (res.status === 503) {
+        return { ok: false, message: "Admin is not configured on the server (set ADMIN_PASSWORD)." };
+      }
+      return { ok: false, message: "Invalid passcode." };
+    } catch {
+      return { ok: false, message: "Could not verify passcode. Try again." };
+    }
+  }, []);
+
   useEffect(() => {
     const saved = localStorage.getItem("portfolio-admin-key");
     if (saved) {
-      setPasscode(saved);
-      setAuthenticated(true);
+      void verifyAdminPasscode(saved).then((result) => {
+        if (result.ok) {
+          setPasscode(saved);
+          setAuthenticated(true);
+        } else {
+          localStorage.removeItem("portfolio-admin-key");
+        }
+      });
     }
     if (localStorage.getItem("portfolio-admin-sidebar-collapsed") === "1") {
       setSidebarCollapsed(true);
     }
-  }, []);
+  }, [verifyAdminPasscode]);
 
   const toggleSidebar = () => {
     setSidebarCollapsed((prev) => {
@@ -153,14 +183,16 @@ export default function AdminDashboard({ initialData }: AdminDashboardProps) {
     });
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode.trim() === "admin123" || passcode.trim().length > 0) {
+    setAuthError("");
+    const result = await verifyAdminPasscode(passcode);
+    if (result.ok) {
       localStorage.setItem("portfolio-admin-key", passcode.trim());
       setAuthenticated(true);
       setAuthError("");
     } else {
-      setAuthError("Please enter valid admin passcode.");
+      setAuthError(result.message || "Invalid passcode.");
     }
   };
 

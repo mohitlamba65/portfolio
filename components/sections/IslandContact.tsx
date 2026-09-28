@@ -28,13 +28,13 @@ export default function IslandContact({ profile }: IslandContactProps) {
     <div ref={sectionRef} className="tab-panel" id="contact" data-panel>
       <div className="panel-inner">
         <div className="kicker">CONTACT</div>
-        <h2 className="h2 reveal-item">Let&apos;s build something that has to actually work.</h2>
-        <p
-          className="reveal-item"
-          style={{ color: "var(--text-dim)", maxWidth: "56ch", marginBottom: "36px" }}
-        >
-          Open to backend, full-stack, and AI engineering roles. If you&apos;ve got a system that needs
-          to hold up under real load, I&apos;d like to hear about it.
+        <h2 className="h2 reveal-item">Let&apos;s build something that needs to work.</h2>
+        <p className="reveal-item contact-lede">
+          I&apos;m open to full-stack, backend, and AI engineering opportunities.
+        </p>
+        <p className="reveal-item contact-lede contact-lede--last">
+          If you&apos;re working on a product where scalability, reliability, or a difficult
+          engineering problem actually matters, let&apos;s talk.
         </p>
 
         <div className="terminal reveal-item">
@@ -47,7 +47,9 @@ export default function IslandContact({ profile }: IslandContactProps) {
             <div className="line">
               <span className="prompt">mohit@systems</span>:~$ whoami
             </div>
-            <div className="line out">Backend Engineer · AI Systems · Delhi, India</div>
+            <div className="line out">
+              Full Stack Developer · Backend Systems · AI/LLM · Delhi, India
+            </div>
             <div className="line">
               <span className="prompt">mohit@systems</span>:~$ cat contact.txt
             </div>

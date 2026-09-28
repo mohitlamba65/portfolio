@@ -4,7 +4,12 @@
     "roleTitle": "ENGINEER / BUILDER",
     "subTitle": "Backend + AI systems",
     "headline": "Mohit Lamba builds backend systems, AI agents, and data pipelines that hold up in production.",
-    "heroTag": "I build the parts of a product most people never see — the pipelines, the agents, the systems that keep running at 3 am. Currently obsessed with making AI agents actually reliable in production.",
+    "heroTag": "I build the parts of a product most people never see — the pipelines, the agents, the systems that keep running at 3 am.",
+    "heroTagLines": [
+      "I build the parts of a product most people never see — the pipelines, the agents, the systems that keep running at 3 am.",
+      "Currently obsessed with making AI agents actually reliable in production."
+    ],
+    "heroRoles": ["Backend Engineer", "AI Systems Builder", "Full Stack Developer"],
     "availabilityBadge": "AVAILABLE FOR BACKEND · AI ENGINEERING ROLES",
     "location": "Delhi, India",
     "availabilityStatus": "Open for high-scale backend engineering & AI infrastructure roles",
@@ -17,6 +22,16 @@
     "navbarAvatarUrl": "/default-avatar.svg",
     "profilePhotoUrl": "/default-avatar.svg",
     "resumeUrl": "/resume.pdf",
+    "aboutPhotoCard": {
+      "metaLine1": "ENGINEER: {name}",
+      "metaLine2": "FOCUS: SCALE · PERFORMANCE · RELIABILITY",
+      "traits": [
+        "I Build Products",
+        "I Solve System Problems",
+        "I Optimize What Matters",
+        "I KEEP LEARNING"
+      ]
+    },
     "socialLinks": {
       "github": "https://github.com/mohitlamba65",
       "linkedin": "https://www.linkedin.com/in/mohit-lamba-b39a3b35a",
@@ -27,16 +42,23 @@
   },
   "stats": {
     "usersServed": "1M+",
-    "githubContributions": 806,
+    "githubContributions": 800,
     "totalCommits": 150,
     "publicRepos": 22,
+    "productionProducts": 2,
     "b2bClients": 50,
+    "heroCards": [
+      { "id": "users-reached", "label": "USERS REACHED", "bindTo": "usersServed", "displayValue": "1M+" },
+      { "id": "production-products", "label": "PRODUCTION PRODUCTS", "bindTo": "productionProducts" },
+      { "id": "github-contributions", "label": "GITHUB CONTRIBUTIONS", "bindTo": "githubContributions", "suffix": "+" },
+      { "id": "public-repos", "label": "PUBLIC REPOS", "bindTo": "publicRepos" }
+    ],
     "github": {
       "syncEnabled": true,
       "username": "mohitlamba65",
       "excludeForks": true,
       "overrides": {
-        "githubContributions": false,
+        "githubContributions": true,
         "publicRepos": false,
         "totalCommits": false
       }
@@ -47,40 +69,43 @@
       "id": "exp-mednex",
       "company": "Mednex",
       "role": "AI & Backend Systems",
-      "period": "Current",
+      "period": "Jul 2026 – Sep 2026",
       "location": "Remote · India",
-      "highlightMetric": "50+ B2B clients on the GTM platform",
-      "description": "Helped build an autonomous GTM AI platform in production — coordinated agents for ICP generation, list building, market research, and personalized outreach, not a single-prompt wrapper.",
+      "description": "Contributed to a production AI platform focused on turning complex AI workflows into reliable, composable backend systems.",
       "bullets": [
-        "Agent orchestration with LangGraph and RAG over business context",
-        "Backend pipelines integrating external data providers and campaign workflows",
-        "Production system running campaigns for 50+ B2B clients (proprietary — architecture walkthroughs on request)"
+        "Worked alongside the core engineering team on agent orchestration, RAG pipelines, asynchronous workflows, and external data integrations.",
+        "Contributed to architectural decisions around workflow state, service boundaries, failure handling, background processing, and reliable execution of multi-step AI tasks.",
+        "Worked with LangGraph and LangChain to structure multi-step AI workflows beyond simple prompt-response interactions."
       ],
-      "techStack": ["Node.js", "TypeScript", "LangGraph", "LangChain", "RAG", "PostgreSQL"]
+      "techStack": ["Node.js", "TypeScript", "PostgreSQL", "LangGraph", "LangChain", "RAG"]
     },
     {
       "id": "exp-ey",
       "company": "EY",
-      "role": "Backend Engineer · EPFO WhatsApp engagement platform",
-      "period": "Previous",
+      "role": "Backend Engineer · EPFO WhatsApp Engagement Platform",
+      "period": "Apr 2026 – Jun 2026",
       "location": "Delhi, India",
-      "description": "Owned backend systems for a high-traffic messaging product at 1M+ active campaign users.",
+      "description": "Contributed to backend systems for an EPFO WhatsApp engagement platform serving 1M+ active campaign users.",
       "bullets": [
-        "Webhook-driven WhatsApp Cloud API flows with idempotent handlers",
-        "Redis Streams and RabbitMQ for async delivery under peak load",
-        "PostgreSQL services built for reliability at scale"
+        "Built and optimized webhook-driven WhatsApp workflows with idempotent processing, retry-safe execution, and async event handling.",
+        "Worked with Redis Streams and RabbitMQ to process high-volume campaign events asynchronously and prevent downstream bottlenecks.",
+        "Contributed to independently scalable backend services and reliable event-processing workflows for production messaging."
       ],
-      "techStack": ["Node.js", "TypeScript", "Redis Streams", "RabbitMQ", "PostgreSQL", "WhatsApp Cloud API"]
+      "techStack": ["Node.js", "TypeScript", "PostgreSQL", "Redis Streams", "RabbitMQ", "WhatsApp Cloud API"]
     },
     {
-      "id": "exp-foundations",
-      "company": "Foundations",
-      "role": "Full-stack development, then a pull toward backend + AI",
-      "period": "Earlier",
+      "id": "exp-codechip",
+      "company": "Codechip Studios",
+      "role": "Full Stack Developer Intern",
+      "period": "Nov 2025 – Mar 2026",
       "location": "India",
-      "description": "Started across the stack, kept gravitating toward the systems layer — the parts users never see but always feel.",
-      "bullets": [],
-      "techStack": []
+      "description": "Started my professional development journey building full-stack applications and backend services, while learning how production software is structured beyond individual features.",
+      "bullets": [
+        "Developed REST APIs for freight-forwarding automation, including quotation generation and automated email workflows.",
+        "Built backend services for an AI-powered JEE DPP generator, working with PostgreSQL and Prisma to turn application logic into reliable data-driven workflows.",
+        "Worked across the frontend and backend, building a stronger understanding of API design, database modeling, authentication, and end-to-end product development."
+      ],
+      "techStack": ["React.js", "Node.js", "Express.js", "PostgreSQL", "Prisma", "MongoDB"]
     }
   ],
   "projects": [

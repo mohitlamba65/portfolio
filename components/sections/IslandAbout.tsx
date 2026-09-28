@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Profile, SystemStats } from "@/types/portfolio";
+import {
+  resolveAboutPhotoCard,
+  resolveAboutPrinciples,
+  TRAIT_ACCENT_COLORS,
+} from "@/lib/about-sidebar-defaults";
+import { resolveHeroStatCards } from "@/lib/hero-stat-cards";
+import { HeroAboutStatPanel } from "@/components/shared/HeroStatDisplay";
 import gsap from "gsap";
 
 interface IslandAboutContentProps {
@@ -16,16 +23,12 @@ const bios = [
   `I design around <strong>SOLID principles</strong> and layered boundaries — Clean and Hexagonal Architecture — because six months from now, someone (often me) has to change this code without fear.`,
 ];
 
-const principles = [
-  { code: "01", title: "SOLID", desc: "Every class has one reason to change. Makes large systems survivable." },
-  { code: "02", title: "Clean Architecture", desc: "Business logic that doesn't know or care what database it's talking to." },
-  { code: "03", title: "Hexagonal Architecture", desc: "Ports and adapters, so swapping a provider is a config change, not a rewrite." },
-  { code: "04", title: "System Design", desc: "Thinking in failure modes and load before writing the first line." },
-];
-
 /** About block embedded on the home panel (not a separate tab). */
 export function IslandAboutContent({ profile, stats }: IslandAboutContentProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const resolvedStats = useMemo(() => resolveHeroStatCards(stats), [stats]);
+  const photoCard = useMemo(() => resolveAboutPhotoCard(profile), [profile]);
+  const principles = useMemo(() => resolveAboutPrinciples(profile), [profile]);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -83,7 +86,7 @@ export function IslandAboutContent({ profile, stats }: IslandAboutContentProps) 
 
     counters.forEach((c) => observer.observe(c));
     return () => observer.disconnect();
-  }, []);
+  }, [resolvedStats]);
 
   useEffect(() => {
     const card = document.getElementById("op-card");
@@ -114,9 +117,7 @@ export function IslandAboutContent({ profile, stats }: IslandAboutContentProps) 
   }, []);
 
   const paragraphs =
-    profile.bioParagraphs?.length > 0
-      ? profile.bioParagraphs
-      : null;
+    profile.bioParagraphs?.length > 0 ? profile.bioParagraphs : null;
 
   return (
     <div ref={sectionRef} id="about-on-home" className="home-about-block">
@@ -133,32 +134,7 @@ export function IslandAboutContent({ profile, stats }: IslandAboutContentProps) 
                 <p key={i} className="reveal-item" dangerouslySetInnerHTML={{ __html: p }} />
               ))}
 
-          <div className="stat-panel">
-            <div className="stat-row">
-              <span className="stat-label">EPFO PLATFORM USERS (EY)</span>
-              <span className="stat-num" data-count="1" data-suffix="M+">
-                0
-              </span>
-            </div>
-            <div className="stat-row">
-              <span className="stat-label">B2B CLIENTS ON GTM PLATFORM</span>
-              <span className="stat-num" data-count={stats.b2bClients || 50} data-suffix="+">
-                0
-              </span>
-            </div>
-            <div className="stat-row">
-              <span className="stat-label">TOTAL GITHUB CONTRIBUTIONS</span>
-              <span className="stat-num" data-count={stats.githubContributions ?? 806} data-suffix="">
-                0
-              </span>
-            </div>
-            <div className="stat-row">
-              <span className="stat-label">PUBLIC REPOS</span>
-              <span className="stat-num" data-count={stats.publicRepos ?? 22} data-suffix="">
-                0
-              </span>
-            </div>
-          </div>
+          <HeroAboutStatPanel stats={resolvedStats} />
         </div>
 
         <div className="about-side">
@@ -180,28 +156,35 @@ export function IslandAboutContent({ profile, stats }: IslandAboutContentProps) 
                 }}
               />
               <div className="op-photo-fallback">
-                {profile.name.split(" ").map((n) => n[0]).join("")}
+                {profile.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
               </div>
             </div>
-            <div className="op-meta">
-              <span className="op-dot"></span>
-              OPERATOR: {profile.name.toUpperCase()} — STATUS: ACTIVE
+            <div className="op-meta-block">
+              <div className="op-meta">
+                <span className="op-dot"></span>
+                {photoCard.metaLine1}
+              </div>
+              {photoCard.metaLine2 ? (
+                <div className="op-meta op-meta-secondary">{photoCard.metaLine2}</div>
+              ) : null}
             </div>
           </div>
 
           <div className="trait-row">
-            <span className="trait" style={{ "--tc": "var(--cyan)" } as React.CSSProperties}>
-              Debugs at 2am
-            </span>
-            <span className="trait" style={{ "--tc": "var(--amber)" } as React.CSSProperties}>
-              Writes tests before demos
-            </span>
-            <span className="trait" style={{ "--tc": "var(--violet)" } as React.CSSProperties}>
-              Reads the RFC
-            </span>
-            <span className="trait" style={{ "--tc": "var(--pink)" } as React.CSSProperties}>
-              Ships boring code, on purpose
-            </span>
+            {photoCard.traits?.map((trait, i) => (
+              <span
+                key={`${trait}-${i}`}
+                className="trait"
+                style={
+                  { "--tc": TRAIT_ACCENT_COLORS[i % TRAIT_ACCENT_COLORS.length] } as React.CSSProperties
+                }
+              >
+                {trait}
+              </span>
+            ))}
           </div>
         </div>
       </div>
@@ -209,9 +192,9 @@ export function IslandAboutContent({ profile, stats }: IslandAboutContentProps) 
       <div className="principles">
         {principles.map((p) => (
           <div key={p.code} className="principle reveal-item">
-            <div className="pcode">{p.code}</div>
+            {p.code ? <div className="pcode">{p.code}</div> : null}
             <h4>{p.title}</h4>
-            <p>{p.desc}</p>
+            {p.desc ? <p>{p.desc}</p> : null}
           </div>
         ))}
       </div>

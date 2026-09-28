@@ -3,20 +3,45 @@
     "name": "Mohit Lamba",
     "roleTitle": "ENGINEER / BUILDER",
     "subTitle": "Backend + AI systems",
-    "headline": "Mohit Lamba builds backend systems, AI agents, and data pipelines that hold up in production.",
-    "heroTag": "I build the parts of a product most people never see — the pipelines, the agents, the systems that keep running at 3 am. Currently obsessed with making AI agents actually reliable in production.",
-    "availabilityBadge": "AVAILABLE FOR BACKEND · AI ENGINEERING ROLES",
+    "headline": "I build full-stack products, scalable backend systems, and AI workflows that hold up in production.",
+    "heroTag": "I build production software that has to scale, stay reliable, and keep working when the system gets complicated.",
+    "heroTagLines": [
+      "I build production software that has to scale, stay reliable, and keep working when the system gets complicated.",
+      "I work across the full stack, with a particular focus on backend systems, distributed workflows, performance, and AI-powered products."
+    ],
+    "heroRoles": [
+      "Backend Engineer",
+      "AI Systems Builder",
+      "Full Stack Developer"
+    ],
+    "availabilityBadge": "OPEN TO FULL STACK · BACKEND · AI ENGINEERING ROLES",
     "location": "Delhi, India",
     "availabilityStatus": "Open for high-scale backend engineering & AI infrastructure roles",
     "bioParagraphs": [
-      "I'm a full-stack developer who ended up specializing in the harder half of the stack: backend systems and AI infrastructure. I like problems where the interesting part isn't the UI — it's what happens after the request leaves the browser.",
-      "At EY, I helped build an EPFO WhatsApp engagement platform supporting 1M+ active campaign users — the kind of scale where every shortcut you take in the backend eventually finds you. That's where I learned to care about reliability, not just features.",
-      "More recently, at Mednex, I helped build an autonomous GTM AI platform now running campaigns for 50+ B2B clients across thousands of leads — agentic orchestration, RAG, and list-building pipelines, not just a thin LLM wrapper.",
-      "I design around SOLID principles and layered boundaries — Clean and Hexagonal Architecture — because six months from now, someone (often me) has to change this code without fear."
+      "I started with the MERN stack because I wanted to understand how products were built from end to end — the interface, the APIs, the database, and everything connecting them.",
+      "My first internship changed the way I thought about software.",
+      "Working with a production codebase taught me things that tutorials couldn't: how to structure code so it can change safely, how APIs behave under real traffic, how asynchronous workflows fail, and how small architectural decisions become expensive when a system grows.",
+      "That's what pulled me deeper into backend engineering.",
+      "At EY, I worked on an EPFO WhatsApp engagement platform that scaled to 1M+ active campaign users. I worked across APIs, webhooks, Redis Streams, asynchronous processing, microservices, idempotency, and the systems behind large-scale messaging workflows.",
+      "At Mednex, I worked on an autonomous GTM AI platform, building agentic workflows, RAG pipelines, list-building systems, background jobs, and the backend infrastructure connecting them. The interesting part wasn't just making an LLM produce an answer — it was making the entire workflow behave reliably when real data, external services, and long-running jobs entered the picture.",
+      "That's the kind of engineering I enjoy.",
+      "I like taking an ambiguous problem, breaking it down into systems, and making those systems simpler, faster, and more reliable. Sometimes that means designing an API. Sometimes it means rethinking a queue, eliminating a bottleneck, or figuring out how an AI workflow should recover when something fails.",
+      "I'm particularly interested in scalability, performance optimization, reliable backend systems, distributed workflows, and AI-powered products.",
+      "I still enjoy building across the stack — but I'm increasingly drawn to the engineering underneath the product: the part that makes everything else work."
     ],
     "navbarAvatarUrl": "/uploads/avatar-nav-1789790687560.jpg",
     "profilePhotoUrl": "/uploads/avatar-profile-1789790694381.jpg",
     "resumeUrl": "/uploads/resume-1790222770031.pdf",
+    "aboutPhotoCard": {
+      "metaLine1": "ENGINEER: MOHIT LAMBA",
+      "metaLine2": "FOCUS: SCALE · PERFORMANCE · RELIABILITY",
+      "traits": [
+        "I Build Products",
+        "I Solve System Problems",
+        "I Optimize What Matters",
+        "I KEEP LEARNING"
+      ]
+    },
     "socialLinks": {
       "github": "https://github.com/mohitlamba65",
       "linkedin": "https://www.linkedin.com/in/mohit-lamba-b39a3b35a",
@@ -27,16 +52,41 @@
   },
   "stats": {
     "usersServed": "1M+",
-    "githubContributions": 806,
+    "githubContributions": 800,
     "totalCommits": 150,
     "publicRepos": 22,
+    "productionProducts": 2,
     "b2bClients": 50,
+    "heroCards": [
+      {
+        "id": "users-reached",
+        "label": "USERS REACHED",
+        "bindTo": "usersServed",
+        "displayValue": "1M+"
+      },
+      {
+        "id": "production-products",
+        "label": "PRODUCTION PRODUCTS",
+        "bindTo": "productionProducts"
+      },
+      {
+        "id": "github-contributions",
+        "label": "GITHUB CONTRIBUTIONS",
+        "bindTo": "githubContributions",
+        "suffix": "+"
+      },
+      {
+        "id": "public-repos",
+        "label": "PUBLIC REPOS",
+        "bindTo": "publicRepos"
+      }
+    ],
     "github": {
       "syncEnabled": true,
       "username": "mohitlamba65",
       "excludeForks": true,
       "overrides": {
-        "githubContributions": false,
+        "githubContributions": true,
         "publicRepos": false,
         "totalCommits": false
       }
@@ -47,7 +97,7 @@
       "id": "exp-mednex",
       "company": "Mednex",
       "role": "AI & Backend Systems",
-      "period": "Current",
+      "period": "July 2026 to Sep 2026",
       "location": "Remote · India",
       "highlightMetric": "50+ B2B clients on the GTM platform",
       "description": "Helped build an autonomous GTM AI platform in production — coordinated agents for ICP generation, list building, market research, and personalized outreach, not a single-prompt wrapper.",
@@ -70,7 +120,7 @@
       "company": "EY",
       "role": "Backend Engineer · EPFO WhatsApp engagement platform",
       "period": "Previous",
-      "location": "Delhi, India",
+      "location": "Gurugram, India",
       "description": "Owned backend systems for a high-traffic messaging product — APIs, webhooks, Redis Streams, and async processing at 1M+ active campaign users.",
       "bullets": [
         "Webhook-driven WhatsApp Cloud API flows with idempotent handlers and retry-safe queues",
@@ -87,14 +137,25 @@
       ]
     },
     {
-      "id": "exp-foundations",
-      "company": "Foundations",
-      "role": "Full-stack development, then a pull toward backend + AI",
-      "period": "Earlier",
+      "id": "exp-codechip",
+      "company": "Codechip Studios",
+      "role": "Full Stack Developer Intern",
+      "period": "Nov 2025 – Mar 2026",
       "location": "India",
-      "description": "Started across the stack, kept gravitating toward the systems layer — the parts users never see but always feel.",
-      "bullets": [],
-      "techStack": []
+      "description": "Started my professional development journey building full-stack applications and backend services, while learning how production software is structured beyond individual features.",
+      "bullets": [
+        "Developed REST APIs for freight-forwarding automation, including quotation generation and automated email workflows.",
+        "Built backend services for an AI-powered JEE DPP generator, working with PostgreSQL and Prisma to turn application logic into reliable data-driven workflows.",
+        "Worked across the frontend and backend, building a stronger understanding of API design, database modeling, authentication, and end-to-end product development."
+      ],
+      "techStack": [
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "Prisma",
+        "MongoDB"
+      ]
     }
   ],
   "projects": [
@@ -135,7 +196,8 @@
       ],
       "liveUrl": "https://warmtalk.vercel.app/",
       "coverImageUrl": "/projects/warmtalk.png",
-      "featured": true
+      "featured": true,
+      "githubUrl": "https://github.com/mohitlamba65/warmtalk.git"
     },
     {
       "id": "proj-next",
@@ -348,5 +410,5 @@
       "icon": "k6"
     }
   ],
-  "lastUpdated": "2026-09-24T04:06:10.043Z"
+  "lastUpdated": "2026-09-28T12:20:46.356Z"
 }

@@ -106,7 +106,7 @@ export default function ExperienceTab({ data, onChange }: ExperienceTabProps) {
                   key={exp.id}
                   active={exp.id === selectedId}
                   title={exp.company}
-                  meta={exp.role}
+                  meta={[exp.period, exp.role].filter(Boolean).join(" · ")}
                   onClick={() => setSelectedId(exp.id)}
                 />
               ))
@@ -131,7 +131,10 @@ export default function ExperienceTab({ data, onChange }: ExperienceTabProps) {
                 </button>
               </div>
 
-              <AdminFormSection title="Basics">
+              <AdminFormSection title="Header (timeline card)">
+                <p className="admin-hint mb-3 !mt-0">
+                  Matches the experience tab: company kicker, role title, location, and date pill.
+                </p>
                 <div className="admin-form-grid two-col">
                   <AdminField label="Company">
                     <AdminInput
@@ -140,91 +143,98 @@ export default function ExperienceTab({ data, onChange }: ExperienceTabProps) {
                       placeholder="e.g. Mednex"
                     />
                   </AdminField>
-                  <AdminField label="Role">
+                  <AdminField label="Role / title">
                     <AdminInput
                       value={selected.role}
                       onChange={(e) => handleUpdate(selected.id, { role: e.target.value })}
                       placeholder="e.g. AI & Backend Systems"
                     />
                   </AdminField>
-                  <AdminField label="Period">
+                  <AdminField label="Period" hint="Shown as the date pill">
                     <AdminInput
                       value={selected.period}
                       onChange={(e) => handleUpdate(selected.id, { period: e.target.value })}
-                      placeholder="e.g. 2024 — Present"
+                      placeholder="e.g. Jul 2026 – Sep 2026"
                     />
                   </AdminField>
-                  <AdminField label="Location" hint="Optional">
+                  <AdminField label="Location">
                     <AdminInput
                       value={selected.location || ""}
                       onChange={(e) => handleUpdate(selected.id, { location: e.target.value })}
-                      placeholder="e.g. Delhi, India"
+                      placeholder="e.g. Remote · India"
                     />
                   </AdminField>
                 </div>
-                <AdminField label="Summary">
-                  <AdminTextarea
-                    value={selected.description}
-                    onChange={(e) => handleUpdate(selected.id, { description: e.target.value })}
-                    placeholder="Brief overview of what you did..."
-                    className="min-h-[100px]"
+              </AdminFormSection>
+
+              <AdminFormSection title="Summary paragraph">
+                <AdminTextarea
+                  value={selected.description}
+                  onChange={(e) => handleUpdate(selected.id, { description: e.target.value })}
+                  placeholder="Opening paragraph under the header..."
+                  className="min-h-[100px]"
+                />
+              </AdminFormSection>
+
+              <AdminFormSection title="Impact bullets">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="admin-hint !mt-0">Bulleted list on the card body.</p>
+                  <button
+                    type="button"
+                    onClick={() => handleAddBullet(selected.id)}
+                    className="admin-btn-accent-soft !py-1 !px-2 text-xs"
+                  >
+                    <Plus size={12} />
+                    Add bullet
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {(selected.bullets || []).map((bullet, bIdx) => (
+                    <div key={bIdx} className="flex items-start gap-2">
+                      <AdminTextarea
+                        value={bullet}
+                        onChange={(e) => handleUpdateBullet(selected.id, bIdx, e.target.value)}
+                        placeholder="Achievement or responsibility..."
+                        className="flex-1 min-h-[72px]"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveBullet(selected.id, bIdx)}
+                        className="admin-faint hover:text-red-400 p-2 shrink-0"
+                        aria-label="Remove bullet"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  ))}
+                  {(selected.bullets || []).length === 0 ? (
+                    <p className="admin-hint">No bullets yet — add at least one for Mednex/EY-style cards.</p>
+                  ) : null}
+                </div>
+              </AdminFormSection>
+
+              <AdminFormSection title="Stack">
+                <AdminField label="Technologies" hint="Comma-separated — shown as chips under STACK">
+                  <AdminInput
+                    value={(selected.techStack || []).join(", ")}
+                    onChange={(e) => handleTechStackChange(selected.id, e.target.value)}
+                    placeholder="Node.js, TypeScript, PostgreSQL, LangGraph"
                   />
                 </AdminField>
               </AdminFormSection>
 
-              <AdminDetails summary="Extra details (bullets, tech, highlight)">
-                <AdminField label="Highlight metric" hint="Optional short achievement">
+              <AdminDetails summary="Optional highlight badge">
+                <AdminField label="Highlight metric" hint="Small line under location; leave empty to hide">
                   <AdminInput
                     value={selected.highlightMetric || ""}
-                    onChange={(e) => handleUpdate(selected.id, { highlightMetric: e.target.value })}
-                    placeholder="e.g. 50+ B2B clients"
+                    onChange={(e) =>
+                      handleUpdate(selected.id, {
+                        highlightMetric: e.target.value.trim() || undefined,
+                      })
+                    }
+                    placeholder="e.g. 1M+ active campaign users"
                   />
                 </AdminField>
-
-                <AdminField label="Technologies" hint="Comma-separated">
-                  <AdminInput
-                    value={(selected.techStack || []).join(", ")}
-                    onChange={(e) => handleTechStackChange(selected.id, e.target.value)}
-                    placeholder="Node.js, TypeScript, Redis"
-                  />
-                </AdminField>
-
-                <div className="admin-field">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="admin-label !mb-0">Bullet points</span>
-                    <button
-                      type="button"
-                      onClick={() => handleAddBullet(selected.id)}
-                      className="admin-btn-accent-soft !py-1 !px-2 text-xs"
-                    >
-                      <Plus size={12} />
-                      Add
-                    </button>
-                  </div>
-                  <div className="space-y-2">
-                    {(selected.bullets || []).map((bullet, bIdx) => (
-                      <div key={bIdx} className="flex items-center gap-2">
-                        <AdminInput
-                          value={bullet}
-                          onChange={(e) => handleUpdateBullet(selected.id, bIdx, e.target.value)}
-                          placeholder="Achievement or responsibility..."
-                          className="flex-1"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveBullet(selected.id, bIdx)}
-                          className="admin-faint hover:text-red-400 p-2"
-                          aria-label="Remove bullet"
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      </div>
-                    ))}
-                    {(selected.bullets || []).length === 0 ? (
-                      <p className="admin-hint">Impact bullets — shown on the experience card.</p>
-                    ) : null}
-                  </div>
-                </div>
               </AdminDetails>
             </AdminFormSurface>
           ) : (

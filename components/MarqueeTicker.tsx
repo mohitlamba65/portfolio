@@ -28,11 +28,8 @@ export default function MarqueeTicker() {
   }
 
   const facts = [
-    "5M+ USERS SERVED",
-    "806 GITHUB CONTRIBUTIONS",
-    "99.99% UPTIME",
-    "40+ MICROSERVICES MANAGED",
-    "ZERO DATA BREACHES"
+    "1M+ USERS SERVED",
+    "806 GITHUB CONTRIBUTIONS"
   ];
 
   return (
